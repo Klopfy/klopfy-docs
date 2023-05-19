@@ -1,0 +1,8 @@
+= README
+
+[source, bash]
+----
+podman run -v $PWD:/antora:Z --rm -it antora/antora ash
+npm i @antora/lunr-extension
+antora antora-playbook.yml
+----
