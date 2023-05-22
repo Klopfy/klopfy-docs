@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Source Blocks :: Personal Documentation Site</title>
+    <link rel="prev" href="ui-macros.html">
+    <link rel="next" href="admonitions.html">
+    <meta name="generator" content="Antora 3.1.2">
+    <script>
+!function (theme) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
+    </script>
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://antora.org">Antora</a>
+        <span class="separator">//</span>
+        <a href="../../..">Personal Notes</a>
+      </div>
+      <div class="navbar-item search hide-for-print">
+        <input id="search-input" type="text" placeholder="Search the docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+
+
+        <div id="switch-theme">
+          <input type="checkbox" id="switch-theme-checkbox" />
+          <label for="switch-theme-checkbox">Dark Theme</label>
+        </div>
+<!--
+        <button type="button" id="themeSwitch">
+        </button>
+-->
+
+<!--
+        <button type="button" id="themeSwitch" class="hidden sm:block stroke-white fill-white ">
+          <span class="dark:hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+              <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+              <path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"></path>
+            </svg>
+          </span>
+          <span class="hidden dark:inline">
+            <svg viewBox="0 0 512 512" class="w-4 h-4">
+              <path d="M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z"/>
+            </svg>
+          </span>
+        </button>
+-->
+<!--
+        <div id="switch-theme">
+          <input type="checkbox" id="switch-theme-checkbox" />
+          <label for="switch-theme-checkbox">Dark Theme</label>
+        </div>
+-->
+
+
+        <a class="navbar-item" href="https://github.com/Klopfy">
+          <span class="icon">
+            <svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="antora" data-version="3.1">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../index.html">Antora</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../whats-new.html">What&#8217;s New in Antora 3.1</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../asciidoctor-upgrade-notes.html">Asciidoctor Upgrade Notes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../features.html">How Antora Can Help</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../how-antora-works.html">How Antora Works</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install-and-run-quickstart.html">Install and Run Antora Quickstart</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Get Antora</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install/linux-requirements.html">Linux Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install/macos-requirements.html">macOS Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install/windows-requirements.html">Windows Requirements</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install/install-antora.html">Install Antora</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install/upgrade-antora.html">Upgrade Antora</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../install/supported-platforms.html">Supported Platforms</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Set Up Content Sources</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../organize-content-files.html">How to Organize Your Content Files</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../content-source-repositories.html">Repositories and Content Source Roots</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../content-source-versioning-methods.html">Content Source Versioning Methods</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../standard-directories.html">Standard File and Directory Set</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../symlinks.html">Symlinks</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../module-directories.html">Module Directories and Modules</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../root-module-directory.html">ROOT Module Directory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../named-module-directory.html">Named Module Directory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../module-directory-names.html">Recommendations for Module Directory Names</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../module-url-segment.html">Module Segment in Page URLs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../family-directories.html">Family Directories and Families</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../pages-directory.html">Pages Directory and Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../partials-directory.html">Partials Directory and Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../examples-directory.html">Examples Directory and Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../images-directory.html">Images Directory and Files</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../attachments-directory.html">Attachments Directory and Files</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Configure Component Versions</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-version.html">What&#8217;s a Component Version?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-version-descriptor.html">What&#8217;s antora.yml?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-name-and-version.html">Define a Component Version</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-name-key.html">Name Key</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-version-key.html">Version Key</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-title.html">Customize the Title</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-display-version.html">Customize the Display Version</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-prerelease.html">Identify a Prerelease Version</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-with-no-version.html">Define a Component with No Version</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-attributes.html">Assign Attributes to a Component Version</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-start-page.html">Choose a Start Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../component-navigation.html">Assign Navigation Files to a Component Version</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../version-facets.html">Version Facets</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../how-component-versions-are-sorted.html">How Component Versions are Sorted</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../distributed-component-version.html">Distributed Component Versions</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/resource-id.html">Resources and Resource IDs</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/resource-id-coordinates.html">Resource ID Coordinates</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/index.html">Pages</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/standard-page.html">Set Up a Standard Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/title-and-metadata.html">Add a Title and Metadata</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/attributes.html">AsciiDoc Attributes in Antora</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../page/define-and-modify-attributes.html">Define and Modify Attributes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../page/page-attributes.html">Page Attributes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../page/intrinsic-attributes.html">Intrinsic Attributes</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/start-page.html">Create a Start Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/xref.html">Xref Macros and Page Links</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../page/page-links.html">Create Page Links</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../page/link-content.html">Page Link Text</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/reftext-and-navtitle.html">Customize reftext and navtitle</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/page-aliases.html">Set Up URL Redirects with page-aliases</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/page-layout.html">Assign UI Templates with page-layout</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/include-a-page.html">Include a Page</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../page/page-partial.html">Unset page-partial Globally</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/images.html">Images</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/block-images.html">Add Block Images</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/inline-images.html">Add Inline Images</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/image-resource-id-examples.html">Image Resource ID Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/image-xref-and-link.html">Resource Links From Images</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/partials.html">Partials</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/include-a-partial.html">Include a Partial</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../page/examples.html">Examples</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/include-an-example.html">Include an Example</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../page/attachments.html">Attachments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">AsciiDoc Primer</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="asciidoc.html">Why AsciiDoc?</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="section-headings.html">Sections</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="text-and-punctuation.html">Text and Punctuation Styles</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="bold.html">Bold</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="italic.html">Italic</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="monospace.html">Monospace</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="highlight.html">Highlight</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="quotes-and-apostrophes.html">Quote Marks and Apostrophes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="special-characters-and-symbols.html">Special Characters and Symbols</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="subscript-and-superscript.html">Subscript and Superscript</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="in-page-xref.html">Internal Xrefs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="external-urls.html">URLs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="lists.html">Lists</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="ordered-and-unordered-lists.html">Bullet and Numbered Lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="description-lists.html">Description Lists</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="checklists.html">Checklists</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="embed-video.html">Embed a Video</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ui-macros.html">UI Macros</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="source.html">Source Blocks</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="admonitions.html">Admonitions</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="examples.html">Examples</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="sidebar.html">Sidebars</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="comments.html">Comments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Navigation</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/index.html">Navigation Assembly</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../navigation/files-and-lists.html">Navigation Files and Lists</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../navigation/single-list.html">Create a Navigation File with One List</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../navigation/multiple-lists.html">Create a Navigation File with Multiple Lists</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/xrefs-and-link-text.html">Page Xrefs and Link Text</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/reference-resources.html">Attachment Xrefs and Link Text</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/external-links.html">Add Links to External Sites</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/format-content.html">Format List Content</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/organize-files.html">Navigation File Locations</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/include-lists.html">Compose Navigation Files</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../navigation/register-navigation-files.html">Register Navigation Files</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Configure Your Site</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../playbook/index.html">The Antora Playbook</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../playbook/set-up-playbook.html">Set Up a Playbook</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-site.html">Site Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/site-url.html">Site URL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/site-title.html">Site Title</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/site-start-page.html">Site Start Page</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/site-robots.html">Robots</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/site-keys.html">Account and API Keys</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-content-sources.html">Content Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/content-source-url.html">URLs for Content Sources</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../playbook/private-repository-auth.html">Private Repository Authentication</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-branches.html">Branches</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-worktrees.html">Worktrees</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-tags.html">Tags</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-source-start-path.html">Single Start Path</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-source-start-paths.html">Multiple Start Paths</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-source-version.html">Fallback Version</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-edit-url.html">Edit URL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/content-refname-matching.html">Refname Matching in Content Sources</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-git.html">Git Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-suffix.html">Git Repository URL Suffix</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-plugins.html">Git Plugins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-asciidoc.html">AsciiDoc Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/asciidoc-attributes.html">Assign Attributes to a Site</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/asciidoc-extensions.html">Asciidoctor Extensions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/asciidoc-sourcemap.html">File and Line Number Information</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-ui.html">UI Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/ui-bundle-url.html">UI Bundle URL</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/ui-supplemental-files.html">Supplemental UI</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/ui-output-dir.html">UI Output Directory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/ui-default-layout.html">Default Layout for Pages</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-urls.html">URLs Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/urls-html-extension-style.html">HTML Extension Styles</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/urls-latest-version-segment.html">Latest Version Segment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/urls-latest-prerelease-version-segment.html">Latest Prerelease Version Segment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/urls-latest-version-segment-strategy.html">Latest Version Segment Strategy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/urls-redirect-facility.html">Redirect Facility Key</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-output.html">Output Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/output-dir.html">Output Directory</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/output-provider-archive.html">Archive Provider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/output-provider-fs.html">Filesystem Provider</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/output-provider-custom.html">Custom Provider</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-runtime.html">Runtime Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Log Keys</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../playbook/runtime-log-level.html">Log Severity Level</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../playbook/runtime-log-failure-level.html">Log Failure Level</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../playbook/runtime-log-format.html">Log Format</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../playbook/runtime-log-destination.html">Log Destination</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/runtime-fetch.html">Fetch Updates</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/runtime-cache-dir.html">Cache Directory</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../playbook/configure-network.html">Network Keys</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/network-proxy.html">Network Proxy</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../playbook/author-mode.html">Use Author Mode</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../playbook/use-an-existing-playbook-project.html">Use an Existing Playbook Project</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../playbook/environment-variables.html">Environment Variables</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Generate Your Site</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../run-antora.html">Run Antora</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../preview-site.html">Preview Your Site</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../cli/index.html">Antora CLI Commands</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cli/options.html">CLI Options</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../cli/primer.html">CLI Primer</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../cache.html">Configure Antora&#8217;s Cache</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../antora-container.html">Run Antora in a Container</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Publish Your Site</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../how-antora-builds-urls.html">How Antora Builds URLs</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../add-404-error-page.html">Add a 404 Error Page</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../sitemap.html">Automatic Sitemap</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../publish-to-github-pages.html">Publish to GitHub Pages</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../publish-to-gitlab-pages.html">Publish to GitLab Pages</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Extend Antora</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../extend/extensions.html">Antora Extensions</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/define-extension.html">Define an Extension</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/register-extension.html">Register an Extension</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/add-event-listeners.html">Add Event Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/use-context-variables.html">Use Context Variables</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/configure-extension.html">Configure an Extension</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/enable-extension.html">Enable an Extension</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/extension-helpers.html">Extension Helpers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/class-based-extension.html">Class-Based Extension</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/asynchronous-listeners.html">Asynchronous Listeners</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/replace-generator-functions.html">Replace Generator Functions</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/extension-tutorial.html">Extension Tutorial</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/generator-events-reference.html">Generator Events Reference</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/generator-context-reference.html">GeneratorContext API Reference</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../extend/extension-use-cases.html">Extension Use Cases</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../extend/supported-components.html">Antora Components</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../project/get-help.html">Get Help</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../security-bulletins.html">Security Bulletins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Project Governance</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../project/release-schedule.html">Release Schedule</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../project/copyright-and-license.html">Copyright and License</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="../project/land-acknowledgement.html">Land Acknowledgement</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Antora</span>
+    <span class="version">3.1</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Antora</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">3.1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component">
+      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../../homelab/main/ansible.html">main</a>
+        </li>
+        <li class="version">
+          <a href="../../../homelab/alpha/ansible.html">alpha</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../homelab/main/ansible.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../index.html">Antora</a></li>
+    <li>AsciiDoc Primer</li>
+    <li><a href="source.html">Source Blocks</a></li>
+  </ul>
+</nav>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Source Blocks</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>On this page, you&#8217;ll learn:</p>
+</div>
+<div class="ulist checklist">
+<ul class="checklist">
+<li>
+<p><i class="fa fa-check-square-o"></i> How to create an AsciiDoc source block.</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> How to specify a source language for a source block.</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> How to specify a global source language using <code>source-language</code>.</p>
+</li>
+<li>
+<p><i class="fa fa-check-square-o"></i> How to disable syntax highlighting for source blocks.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="whats-a-source-block"><a class="anchor" href="#whats-a-source-block"></a>What&#8217;s a source block?</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>An <strong class="term">AsciiDoc source code block</strong>, or <strong class="term">source block</strong> for short, displays snippets of content that are written in a given programming, data, configuration, or markup language.
+The content of a source block is colorized using a syntax highlighter when it&#8217;s rendered in a site.
+A source block is created by assigning the attribute <code>source</code> and the name of a valid source language to a block.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="source-and-source-language-attributes"><a class="anchor" href="#source-and-source-language-attributes"></a>source and source language attributes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The style <code>source</code> is a positional element attribute.
+It&#8217;s assigned to a block using the first position in an attribute list.</p>
+</div>
+<div id="ex-direct" class="listingblock">
+<div class="title">Example 1. Directly assign source and a source language using an attribute list</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[source,name-of-language] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>An attribute list with <code>source</code> assigned to the first position and a source language name, such as <code>bash</code>, <code>cpp</code>, etc., assigned to the second position.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The name of a source language is assigned to the second position in an attribute list or using the <code>source-language</code> document attribute.
+The source language is the name of a programming, data, configuration, or markup language in which the block&#8217;s content is written.</p>
+</div>
+<div class="paragraph">
+<p>Specifying a source language serves two purposes.
+First, it communicates to the site visitor which language runtime or data format reader is needed to interpret the code displayed in the block.
+Second, it allows a syntax highlighter to colorize the source content properly, such as emphasizing language types and keywords.
+Finally, by assigning a language to a block, you can implicitly assign <code>source</code> to the block at the same time.
+As shown in <a href="#ex-implicit">Example 2</a>, by assigning the name of a valid source language to the second position of an attribute list, you implicitly assign <code>source</code> to the first position.</p>
+</div>
+<div id="ex-implicit" class="listingblock">
+<div class="title">Example 2. Assign a source language to the second position of an attribute list</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[,name-of-language] <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>To assign a source language to the second position of an attribute list without assigning <code>source</code> directly to the first position, enter a comma (<code>,</code>) immediately after the opening square bracket, then enter the name of a source language.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The language name is written in lowercase letters and must be a language recognized by the <a href="#source-highlighter">syntax highlighter Antora uses</a> for the content to be colorized correctly.
+If most of your source blocks use the same language, you can assign the name of the language to the <a href="#source-language">source-language document attribute</a>.</p>
+</div>
+<div class="paragraph">
+<p>When <code>source</code> is specified but a language isn&#8217;t specified in the attribute list of a source block or by the <code>source-language</code> document attribute, Antora applies the language <code>none</code> at runtime.
+The block is styled like other source blocks, but no syntax highlighting will be applied to its content.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="create-a-source-block"><a class="anchor" href="#create-a-source-block"></a>Create a source block</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Source blocks are most often created from delimited listing and literal blocks as well as paragraphs.
+A block becomes a source block in the following scenarios:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>a language name is assigned to the second position in a block&#8217;s attribute list, which implicitly assigns <code>source</code> to the first position in the attribute list</p>
+</li>
+<li>
+<p><code>source</code> is assigned directly to the first position in a block&#8217;s attribute list, and a language name is assigned to the second position or to the <code>source-language</code> document attribute</p>
+</li>
+<li>
+<p>the document attribute <code>source-language</code> is set, which automatically promotes all delimited listing blocks that aren&#8217;t assigned another style to source blocks</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>When <code>source</code> is assigned to a block using any of these methods, the content of the block is colorized according to the assigned source language by the syntax highlighter.</p>
+</div>
+<div class="sect2">
+<h3 id="assign-source-implicitly"><a class="anchor" href="#assign-source-implicitly"></a>Assign source implicitly</h3>
+<div class="paragraph">
+<p>Because <code>source</code> is assigned to a block using the first position of an attribute list, you can assign it implicitly by entering a comma (<code>,</code>) directly after the opening bracket, followed by the name of a source language.
+The comma is required, otherwise the language would be assigned to the first position of the attribute list.
+<a href="#ex-source-position">Example 3</a> shows the <code>source</code> attribute being applied implicitly to a listing block.</p>
+</div>
+<div id="ex-source-position" class="listingblock">
+<div class="title">Example 3. Apply source implicitly to a listing block</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[,name-of-language] <i class="conum" data-value="1"></i><b>(1)</b>
+--<i class="conum" data-value="2"></i><b>(2)</b>
+Content of source block <i class="conum" data-value="3"></i><b>(3)</b>
+  Content of source block
+
+Content of source block
+--<i class="conum" data-value="4"></i><b>(4)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>Directly after the opening square bracket (<code>[</code>) of the attribute list, enter a comma (<code>,</code>), followed by the name of the source language in which the block&#8217;s content is written.
+Complete the attribute list with a closing square bracket (<code>]</code>) and select <kbd>Enter</kbd> to go to the next line.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>On the new line directly below the attribute list, enter the opening delimiter of a listing block (<code>----</code>) and then select <kbd>Enter</kbd> to go to the next line.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>On the lines below the opening delimiter, insert your code snippet.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>On a new line, enter the closing delimiter of the listing block (<code>----</code>).</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>You can use <code>source</code> implicitly on other block types to create a source block.
+<a href="#ex-source-paragraph">Example 4</a> shows the <code>source</code> attribute being applied implicitly to a paragraph.</p>
+</div>
+<div id="ex-source-paragraph" class="listingblock">
+<div class="title">Example 4. Apply source style to a paragraph</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">A regular paragraph.
+
+[,name-of-language] <i class="conum" data-value="1"></i><b>(1)</b>
+Content of source block <i class="conum" data-value="2"></i><b>(2)</b>
+
+A regular paragraph.</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>After the opening square bracket (<code>[</code>) of the attribute list, enter a comma (<code>,</code>), followed by the name of the source language in which the block&#8217;s content is written.
+Complete the attribute list with a closing square bracket (<code>]</code>) and select <kbd>Enter</kbd> to go to the next line.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>On the line directly below the attribute list, enter the block&#8217;s content on one or more continuous lines.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In <a href="#ex-haskell">Example 5</a>, <code>source</code> is assigned implicitly and <code>haskell</code> is assigned as the language.</p>
+</div>
+<div id="ex-haskell" class="listingblock">
+<div class="title">Example 5. Assign source and the language haskell to a block</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[,haskell]
+----
+main :: IO ()
+main = putStrLn "Hello, World!"
+----</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#ex-haskell-result">Example 6</a> shows how the source block appears when displayed in a site.</p>
+</div>
+<div id="ex-haskell-result" class="listingblock">
+<div class="title">Example 6. Rendered source block with syntax highlighting applied</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-haskell hljs" data-lang="haskell">main :: IO ()
+main = putStrLn "Hello, World!"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The content in <a href="#ex-haskell-result">Example 6</a> is colorized, and when you hover over the block, the language name <em>HASKELL</em> appears in its upper right corner.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="assign-source-directly"><a class="anchor" href="#assign-source-directly"></a>Assign source directly</h3>
+<div class="paragraph">
+<p>In some cases, you may prefer to assign <code>source</code> directly to a block.
+In a block&#8217;s attribute list, <code>source</code> is entered in the first position in the list, followed by a comma (<code>,</code>), and then the name of a language, such as <code>clojure</code>, <code>json</code>, <code>xml</code>, etc.
+<a href="#ex-source-direct">Example 7</a> shows the <code>source</code> attribute being applied directly to a delimited literal block (<code>....</code>).</p>
+</div>
+<div id="ex-source-direct" class="listingblock">
+<div class="title">Example 7. Apply source style directly to a block</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[source,name-of-language] <i class="conum" data-value="1"></i><b>(1)</b>
+....
+Content of source block
+  Content of source block
+
+Content of source block
+....</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>In the attribute list, assign <code>source</code> to the first position, followed by a comma (<code>,</code>), and then the name of the source language in which the block&#8217;s content is written.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In <a href="#ex-sql">Example 8</a>, <code>source</code> is assigned to the first position and <code>sql</code> is assigned as the language to the second position.</p>
+</div>
+<div id="ex-sql" class="listingblock">
+<div class="title">Example 8. Assign source and the language sql to a block</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[source,sql]
+----
+IF EXISTS (SELECT name FROM myobjects WHERE name = 'hello')
+----</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#ex-sql-result">Example 9</a> shows how the source block appears when displayed in a site.</p>
+</div>
+<div id="ex-sql-result" class="listingblock">
+<div class="title">Example 9. Rendered source block with syntax highlighting applied</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sql hljs" data-lang="sql">IF EXISTS (SELECT name FROM myobjects WHERE name = 'hello')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The content in <a href="#ex-sql-result">Example 9</a> is colorized, and when you hover over the block, the language name <em>SQL</em> appears in the upper right corner.</p>
+</div>
+<div class="paragraph">
+<p>To assign an element ID, role, or option to a source block using their applicable shorthand syntax, specify the <code>source</code> attribute and append the ID, role, or options to the attribute.
+<a href="#ex-source-id">Example 10</a> shows the <code>source</code> attribute and an element ID being assigned to a listing block.</p>
+</div>
+<div id="ex-source-id" class="listingblock">
+<div class="title">Example 10. Assign an element ID to a source block</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[#element-id,name-of-language] <i class="conum" data-value="1"></i><b>(1)</b> <i class="conum" data-value="2"></i><b>(2)</b>
+----
+Content of source block
+  Content of source block
+----</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>In the attribute list, specify the element ID in the first position.
+An element ID is directly appended to the style (which is empty in this case) using the hash symbol (<code>#</code>) followed by the ID name.
+The <code>source</code> style is implied since a language is specified in the second position.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Directly after the element ID, enter a comma (<code>,</code>), and then the name of the source language in which the block&#8217;s content is written.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s look at a source block that&#8217;s created with a delimited literal block and is assigned an element ID using the shorthand hash symbol (<code>#</code>).
+In <a href="#ex-diff">Example 11</a>, an element ID is appended to the implicit <code>source</code> style with a <code>#</code>.
+The line comparison syntax, <code>diff</code>, is assigned to the second position.</p>
+</div>
+<div id="ex-diff" class="listingblock">
+<div class="title">Example 11. Assign source, an element ID, and the language diff to a block</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[#temper-change,diff]
+....
+-   temperDestination(destination)
++   if (destination instanceof Boom) moderateDestination(destination)
+  }
+  rootLoggerHolder.set(undefined, addFailOnExitHooks(logger, failureLevel))
+....</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#temper-change">Example 12</a> shows how the source block appears when displayed in a site.</p>
+</div>
+<div id="temper-change" class="listingblock">
+<div class="title">Example 12. Rendered source block with syntax highlighting applied</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-diff hljs" data-lang="diff">-   temperDestination(destination)
++   if (destination instanceof Boom) moderateDestination(destination)
+  }
+  rootLoggerHolder.set(undefined, addFailOnExitHooks(logger, failureLevel))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The content in <a href="#temper-change">Example 12</a> is colorized, and when you hover over the block, the language name <em>DIFF</em> appears in the upper right corner of the block.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="source-language"><a class="anchor" href="#source-language"></a>Promote listing blocks with source-language</h3>
+<div class="paragraph">
+<p>You can define a source language globally, either at the page, component version, or site level, by setting the <code>source-language</code> document attribute.
+When <code>source-language</code> is set, all delimited listing blocks that aren&#8217;t assigned a style are automatically promoted to source blocks.
+The <code>source-language</code> attribute is set and assigned a value in the document header of a page, component version descriptor file, or playbook.
+In <a href="#ex-source-document">Example 13</a>, the <code>source-language</code> attribute is set in the header of a page and assigned the name of a language.</p>
+</div>
+<div id="ex-source-document" class="listingblock">
+<div class="title">Example 13. Set source-language in the document header</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">= Title of Page
+:source-language: name-of-language <i class="conum" data-value="1"></i><b>(1)</b>
+
+A paragraph.
+
+--<i class="conum" data-value="2"></i><b>(2)</b>
+Content of source block
+--<i class="conum" data-value="2"></i><b>(2)</b>
+
+A paragraph.
+
+.... <i class="conum" data-value="3"></i><b>(3)</b>
+Content of a literal block.
+.... <i class="conum" data-value="3"></i><b>(3)</b></code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>On a new line in the header of the page, set the built-in document attribute <code>source-language</code> and assign it the name of a language as a value.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>Because <code>source-language</code> is set, this listing block is automatically promoted to a source block.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This literal block remains a literal block.
+Only listing blocks are automatically promoted to source blocks when <code>source-language</code> is set.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>When <code>source-language</code> is set, you may want some listing blocks to not be promoted to source blocks or to assign a different language to a few of them.
+<a href="#ex-source-override">Example 14</a> shows how to prevent a listing block from being promoted to a source block and how to override the language assigned to the <code>source-language</code> attribute.</p>
+</div>
+<div id="ex-source-override" class="listingblock">
+<div class="title">Example 14. Override source-language on select blocks</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">= Title of Page
+:source-language: java <i class="conum" data-value="1"></i><b>(1)</b>
+
+A paragraph.
+
+--<i class="conum" data-value="2"></i><b>(2)</b>
+Content of source block
+--<i class="conum" data-value="2"></i><b>(2)</b>
+
+A paragraph.
+
+[listing] <i class="conum" data-value="3"></i><b>(3)</b>
+----
+Content of listing block
+----
+
+[,yaml] <i class="conum" data-value="4"></i><b>(4)</b>
+----
+Content of source block
+----</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>The document attribute <code>source-language</code> is set in the header of the page and assigned the value <code>java</code>.
+All of the listing blocks on this page that aren&#8217;t directly assigned a style will be promoted to source blocks and all source blocks that aren&#8217;t directly assigned a source language will be assigned the language <code>java</code>.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>This listing block is automatically promoted to a source block and assigned the language <code>java</code>.
+It&#8217;s content will be identified as <em>JAVA</em> and colorized accordingly.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>This listing block is assigned the style <code>listing</code>, therefore it isn&#8217;t promoted to a source block and its contents will not be colorized.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>This source block is directly assigned the language <code>yaml</code>.
+Therefore, the block&#8217;s content will be identified as <em>YAML</em> and colorized accordingly.</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll look at how colorization gets added in the <a href="#source-highlighter">next section</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="source-highlighter"><a class="anchor" href="#source-highlighter"></a>Syntax highlighting</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Syntax highlighting is a technique of colorizing the code to make it easier to read by emphasizing types, keywords, and other language constructs.
+Syntax highlighting of source blocks is enabled using the <code>source-highlighter</code> attribute.
+Antora sets <code>source-highlighter</code> site-wide by default (see <a href="../page/intrinsic-attributes.html#site-and-configuration-attributes" class="xref page">site and configuration attributes</a>), therefore, you don&#8217;t need to do anything to enable this feature.
+Antora uses highlight.js to automatically add syntax highlighting to source blocks that specify a source language.</p>
+</div>
+<div class="paragraph">
+<p>Syntax highlighting also requires a contribution from the UI.
+The reference Antora UI bundles the highlight.js library (both the JavaScript and the CSS) and adds it to each page.
+The names of the languages that are currently supported are listed in the <a href="https://gitlab.com/antora/antora-ui-default/-/raw/HEAD/src/js/vendor/highlight.bundle.js" target="_blank" rel="noopener">highlight.bundle.js file in Antora&#8217;s UI repository</a>.</p>
+</div>
+<div class="paragraph">
+<p>You can disable or override the <code>source-highlighter</code> attribute in the playbook or a component version descriptor.
+To disable syntax highlighting, unset the <code>source-highlighter</code> attribute in your playbook.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 15. Disable source-highlighter attribute in antora-playbook.yml</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">asciidoc:
+  attributes:
+    source-highlighter: ~</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Currently, the only <code>source-highlighter</code> value Antora supports when using the reference UI is <code>highlight.js</code>.
+If you set the value to <code>rouge</code>, <code>pygments</code>, or <code>coderay</code>, Antora will fail.
+That&#8217;s because these built-in, build-time syntax highlighters are not available in the Antora environment (and specifically Asciidoctor.js).</p>
+</div>
+<div class="paragraph">
+<p>You can use other client-side (also known as browser) libraries, such as prettify or prism.
+However, to use them, you&#8217;ll need to modify the UI to bundle and add the library to each page, like the reference UI does for highlight.js.</p>
+</div>
+<div class="paragraph">
+<p>In the future, it will be possible to register additional adapters to plug in other syntax highlighters.
+However, that feature is not currently available in Antora.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="learn-more"><a class="anchor" href="#learn-more"></a>Learn more</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The content of a source block is often inserted using an include directive.
+See <a href="../page/include-an-example.html" class="xref page">Include an Example</a> to learn more.</p>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="ui-macros.html">UI Macros</a></span>
+  <span class="next"><a href="admonitions.html">Admonitions</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring</a></p>
+</footer>
+<script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
+<script async src="../../../search-index.js"></script>
+  </body>
+</html>

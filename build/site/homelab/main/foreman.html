@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Foreman :: Personal Documentation Site</title>
+    <link rel="prev" href="firewalld.html">
+    <link rel="next" href="freeipa.html">
+    <meta name="generator" content="Antora 3.1.2">
+    <script>
+!function (theme) {
+  if (theme === 'dark') document.documentElement.classList.add('dark-theme')
+}(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
+    </script>
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <div class="navbar-item">
+        <a href="https://antora.org">Antora</a>
+        <span class="separator">//</span>
+        <a href="../..">Personal Notes</a>
+      </div>
+      <div class="navbar-item search hide-for-print">
+        <input id="search-input" type="text" placeholder="Search the docs">
+      </div>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+
+
+        <div id="switch-theme">
+          <input type="checkbox" id="switch-theme-checkbox" />
+          <label for="switch-theme-checkbox">Dark Theme</label>
+        </div>
+<!--
+        <button type="button" id="themeSwitch">
+        </button>
+-->
+
+<!--
+        <button type="button" id="themeSwitch" class="hidden sm:block stroke-white fill-white ">
+          <span class="dark:hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6">
+              <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+              <path d="M12 4v1M17.66 6.344l-.828.828M20.005 12.004h-1M17.66 17.664l-.828-.828M12 20.01V19M6.34 17.664l.835-.836M3.995 12.004h1.01M6 6l.835.836"></path>
+            </svg>
+          </span>
+          <span class="hidden dark:inline">
+            <svg viewBox="0 0 512 512" class="w-4 h-4">
+              <path d="M421.6 379.9c-.6641 0-1.35 .0625-2.049 .1953c-11.24 2.143-22.37 3.17-33.32 3.17c-94.81 0-174.1-77.14-174.1-175.5c0-63.19 33.79-121.3 88.73-152.6c8.467-4.812 6.339-17.66-3.279-19.44c-11.2-2.078-29.53-3.746-40.9-3.746C132.3 31.1 32 132.2 32 256c0 123.6 100.1 224 223.8 224c69.04 0 132.1-31.45 173.8-82.93C435.3 389.1 429.1 379.9 421.6 379.9zM255.8 432C158.9 432 80 353 80 256c0-76.32 48.77-141.4 116.7-165.8C175.2 125 163.2 165.6 163.2 207.8c0 99.44 65.13 183.9 154.9 212.8C298.5 428.1 277.4 432 255.8 432z"/>
+            </svg>
+          </span>
+        </button>
+-->
+<!--
+        <div id="switch-theme">
+          <input type="checkbox" id="switch-theme-checkbox" />
+          <label for="switch-theme-checkbox">Dark Theme</label>
+        </div>
+-->
+
+
+        <a class="navbar-item" href="https://github.com/Klopfy">
+          <span class="icon">
+            <svg aria-hidden="true" class="octicon octicon-mark-github" height="24" version="1.1" viewBox="0 0 16 16" width="24">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="homelab" data-version="main">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="ansible.html">Homelab</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="ansible.html">Ansible</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="firewalld.html">Firewalld</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="foreman.html">Foreman</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="freeipa.html">FreeIPA</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="haproxy.html">HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="kvm_virsh.html">Documentation Virsh/KVM</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="networking.html">Networking</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="nginx.html">Nginx</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="rpm.html">RPM Package Manager</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Monitoring</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="monitoring/blackbox_exporter.html">Blackbox exporter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="monitoring/grafana.html">Grafana</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="monitoring/haproxy.html">HAProxy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="monitoring/node_exporter.html">Node exporter</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="monitoring/prometheus.html">Prometheus</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Homelab</span>
+    <span class="version">main</span>
+  </div>
+  <ul class="components">
+    <li class="component">
+      <a class="title" href="../../antora/3.1/index.html">Antora</a>
+      <ul class="versions">
+        <li class="version is-latest">
+          <a href="../../antora/3.1/index.html">3.1</a>
+        </li>
+      </ul>
+    </li>
+    <li class="component is-current">
+      <a class="title" href="ansible.html">Homelab</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="ansible.html">main</a>
+        </li>
+        <li class="version">
+          <a href="../alpha/ansible.html">alpha</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="ansible.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="ansible.html">Homelab</a></li>
+    <li><a href="foreman.html">Foreman</a></li>
+  </ul>
+</nav>
+<div class="page-versions">
+  <button class="version-menu-toggle" title="Show other versions of page">main</button>
+  <div class="version-menu">
+    <a class="version is-current" href="foreman.html">main</a>
+    <a class="version" href="../alpha/foreman.html">alpha</a>
+  </div>
+</div>
+  <div class="edit-this-page"><a href="https://github.com/Klopfy/antora/edit/main/modules/ROOT/pages/foreman.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Foreman</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Links:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Quickinstall link: <a href="https://theforeman.org/manuals/3.2/quickstart_guide.html" class="bare">https://theforeman.org/manuals/3.2/quickstart_guide.html</a></p>
+</li>
+<li>
+<p>Manual link: <a href="https://theforeman.org/manuals/3.2/index.html" class="bare">https://theforeman.org/manuals/3.2/index.html</a></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">[root@katello ~]# sudo foreman-installer -l</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">2021-07-05 22:47:32 [NOTICE] [root] Loading installer configuration. This will take some time.
+2021-07-05 22:47:35 [NOTICE] [root] Running installer with log based terminal output at level NOTICE.
+2021-07-05 22:47:35 [NOTICE] [root] Use -l to set the terminal output log level to ERROR, WARN, NOTICE, INFO, or DEBUG. See --full-help for definitions.
+2021-07-05 22:48:03 [NOTICE] [configure] Starting system configuration.
+2021-07-05 22:49:28 [NOTICE] [configure] 250 configuration steps out of 1338 steps complete.
+2021-07-05 22:50:12 [NOTICE] [configure] 500 configuration steps out of 1340 steps complete.
+2021-07-05 22:50:27 [NOTICE] [configure] 750 configuration steps out of 1352 steps complete.
+2021-07-05 22:52:30 [NOTICE] [configure] 1000 configuration steps out of 1366 steps complete.
+2021-07-05 22:53:19 [NOTICE] [configure] 1250 configuration steps out of 1366 steps complete.
+2021-07-05 22:53:26 [NOTICE] [configure] System configuration has finished.
+Executing: foreman-rake upgrade:run
+`/usr/share/foreman` is not writable.
+Bundler will use `/tmp/bundler20210705-22083-1535yn622083' as your home directory temporarily.
+  Success!
+  * Foreman is running at https://katello.luc.ca
+      Initial credentials are admin / U9L9C7dWQqPLGRLr
+  * Foreman Proxy is running at https://katello.luc.ca:8443
+
+  The full log is at /var/log/foreman-installer/foreman.log</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">   18  sudo yum -y install https://yum.puppet.com/puppet7-release-el-8.noarch.rpm
+   19  sudo dnf module reset ruby
+   20  sudo dnf module enable ruby:2.7
+   21  sudo yum -y install https://yum.theforeman.org/releases/3.2/el8/x86_64/foreman-release.rpm
+   22  sudo yum -y install foreman-installer
+   23  sudo foreman-installer
+   24  sudo firewall-cmd --add-port={22,53,80,443,3000,8140,3306,5432,8443,5910-5930}/tcp --permanent
+   25  sudo firewall-cmd --add-port=67-69/udp --permanent
+   26  sudo firewall-cmd --reload</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Katello: <a href="https://docs.theforeman.org/3.0/Installing_Server_on_Red_Hat/index-katello.html" class="bare">https://docs.theforeman.org/3.0/Installing_Server_on_Red_Hat/index-katello.html</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install foreman-installer-katello foreman-installer
+--puppet-server=false
+--foreman-proxy-puppet=false
+--foreman-proxy-puppetca=false foreman-installer --scenario katello --help
+
+foreman-installer --scenario katello
+--foreman-initial-organization "Lab"
+--foreman-initial-location "Laptop"
+--foreman-initial-admin-username "admin"
+--foreman-initial-admin-password "XXXX"
+--puppet-server=false
+--foreman-proxy-puppet=false
+--foreman-proxy-puppetca=false</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Centos 8 - Katello 4.4</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">   14  dnf clean all
+   15  dnf localinstall https://yum.theforeman.org/releases/3.2/el8/x86_64/foreman-release.rpm
+   16  dnf localinstall https://yum.theforeman.org/katello/4.4/katello/el8/x86_64/katello-repos-latest.rpm
+   17  dnf install centos-release-ansible-29
+   18  dnf localinstall https://yum.puppet.com/puppet7-release-el-8.noarch.rpm
+   19  dnf module reset ruby
+   20  dnf module enable ruby:2.7
+   21  dnf config-manager --set-enabled powertools
+   22  dnf module enable postgresql:12
+   23  dnf update
+   24  dnf install foreman-installer-katello
+   25  foreman-installer --scenario katello   --foreman-initial-organization "Lab"   --foreman-initial-location "Laptop"   --foreman-initial-admin-username "admin"   --foreman-initial-admin-password "100395"   --puppet-server=false   --foreman-proxy-puppet=false   --foreman-proxy-puppetca=false
+   26  firewall-cmd --add-port={22,53,80,443,3000,8140,3306,5432,8443,5910-5930}/tcp --permanent
+   27  firewall-cmd --add-port=67-69/udp --permanent
+   28  firewall-cmd --reload
+   29  tail -n 1 /etc/hosts
+192.168.100.239 foreman.internal-lab.net</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Libvirt tools</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">   34  yum install foreman-libvirt
+   35  systemctl status foreman
+   36  systemctl restart foreman</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">2022-05-16 22:43:09 [NOTICE] [configure] System configuration has finished.
+Executing: foreman-rake upgrade:run
+=============================================
+Upgrade Step 1/8: katello:correct_repositories. This may take a long while.
+=============================================
+Upgrade Step 2/8: katello:clean_backend_objects. This may take a long while.
+0 orphaned consumer id(s) found in candlepin.
+Candlepin orphaned consumers: []
+=============================================
+Upgrade Step 3/8: katello:upgrades:4.0:remove_ostree_puppet_content. =============================================
+Upgrade Step 4/8: katello:upgrades:4.1:sync_noarch_content. =============================================
+Upgrade Step 5/8: katello:upgrades:4.1:fix_invalid_pools. I, [2022-05-16T22:43:18.946728 #30188]  INFO -- : Corrected 0 invalid pools
+I, [2022-05-16T22:43:18.946760 #30188]  INFO -- : Removed 0 orphaned pools
+=============================================
+Upgrade Step 6/8: katello:upgrades:4.1:reupdate_content_import_export_perms. =============================================
+Upgrade Step 7/8: katello:upgrades:4.2:remove_checksum_values. =============================================
+Upgrade Step 8/8: katello:upgrades:4.4:publish_import_cvvs.   Success!
+* Foreman is running at https://foreman.internal-lab.net
+Initial credentials are admin / XXXX
+* To install an additional Foreman proxy on separate machine continue by running:
+
+      foreman-proxy-certs-generate --foreman-proxy-fqdn "$FOREMAN_PROXY" --certs-tar "/root/$FOREMAN_PROXY-certs.tar"
+  * Foreman Proxy is running at https://foreman.internal-lab.net:9090
+
+  The full log is at /var/log/foreman-installer/katello.log</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">  foreman-proxy-certs-generate --foreman-proxy-fqdn "$FOREMAN_PROXY" --certs-tar "/root/$FOREMAN_PROXY-certs.tar"</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Foreman Proxy is running at <a href="https://foreman.internal-lab.net:9090" class="bare">https://foreman.internal-lab.net:9090</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The full log is at /var/log/foreman-installer/katello.log</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Subscription manager: <a href="https://computingforgeeks.com/sync-centos-8-repositories-on-satellite-katello-foreman/" class="bare">https://computingforgeeks.com/sync-centos-8-repositories-on-satellite-katello-foreman/</a></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">   39  hammer organization list
+   40  hammer product create --organization-id 1   --name "CentOS 8 Linux for x86_64"   --description "Repositories to use with CentOS 8 Linux"
+   45  hammer product list --organization-id 1
+   46  mkdir /etc/pki/rpm-gpg/import/
+   47  cd /etc/pki/rpm-gpg/import/
+   48  wget https://www.centos.org/keys/RPM-GPG-KEY-CentOS-Official
+   62  hammer content-credentials create --content-type gpg_key --organization-id 1 --path RPM-GPG-KEY-CentOS-Official --name "RPM-GPG-KEY-CentOS-8"
+hammer content-credentials list --organization-id 1
+hammer repository create --organization-id 1   --product "CentOS 8 Linux for x86_64"   --name "CentOS 8 Base RPMS"   --label "CentOS_8_Base_RPMS"   --content-type "yum"   --download-policy "on_demand"   --gpg-key-id 1   --url "http://centos.mirror.liquidtelecom.com/8/BaseOS/x86_64/os/"   --mirror-on-sync "no"
+hammer repository list --organization-id 1
+hammer repository delete --product-id 1  --organization-id 1
+hammer repository create --organization-id 1   --product "CentOS 8 Linux for x86_64"   --name "CentOS 8 Base RPMS"   --label "CentOS_8_Base_RPMS"   --content-type "yum"   --download-policy "on_demand"   --gpg-key-id 1   --url "http://mirror.centos.org/centos/8-stream/BaseOS/x86_64/os/"   --mirror-on-sync "no"
+
+  117  hammer repository create --organization-id 1   --product "CentOS 8 Linux for x86_64"   --name "CentOS 8 AppStream RPMS"   --label "CentOS_8_AppStream_RPMS"   --content-type "yum"   --download-policy "on_demand"   --gpg-key-id 1   --url "http://mirror.centos.org/centos/8-stream/AppStream/x86_64/os/"   --mirror-on-sync "no"
+  118  hammer repository create --organization-id 1   --product "CentOS 8 Linux for x86_64"   --name "CentOS 8 extras RPMS"   --label "CentOS_8_extras_RPMS"   --content-type "yum"   --download-policy "on_demand"   --gpg-key-id 1   --url "http://mirror.centos.org/centos/8-stream/extras/x86_64/os/"   --mirror-on-sync "no"
+  119  hammer repository create --organization-id 1   --product "CentOS 8 Linux for x86_64"   --name "CentOS 8 centosplus RPMS"   --label "CentOS_8_centosplus_RPMS"   --content-type "yum"   --download-policy "on_demand"   --gpg-key-id 1   --url "http://mirror.centos.org/centos/8-stream/centosplus/x86_64/os/"   --mirror-on-sync "no"
+  120  hammer repository list --organization-id 1 --product "CentOS 8 Linux for x86_64"
+  121  hammer repository create --organization-id 1   --product "CentOS 8 Linux for x86_64"   --name "CentOS 8 PowerTools RPMS"   --label "CentOS_8_PowerTools_RPMS"   --content-type "yum"   --download-policy "on_demand"   --gpg-key-id 1   --url "http://mirror.centos.org/centos/8-stream/PowerTools/x86_64/os/"   --mirror-on-sync "no"
+  122  hammer repository list --organization-id 1 --product "CentOS 8 Linux for x86_64"
+  123  hammer repository synchronize --async --organization-id 1   --product "CentOS 8 Linux for x86_64"   --id 3;
+  124  hammer repository synchronize --async --organization-id 1   --product "CentOS 8 Linux for x86_64"   --id 4;
+  125  hammer repository synchronize --async --organization-id 1   --product "CentOS 8 Linux for x86_64"   --id 5;
+  126  hammer repository synchronize --async --organization-id 1   --product "CentOS 8 Linux for x86_64"   --id 6;
+  127  watch 'df -h /var/lib/pulp'
+  128  df -h
+  129  watch 'df -h /var/lib/pulp'
+  130  hammer content-view create --organization-id 1   --name "CentOS_8"   --description "Content view for CentOS 8"
+  131  for i in $(seq 64 68); do   hammer content-view add-repository --organization-id 1   --name "CentOS_8"   --product "CentOS 8 Linux for x86_64"   --repository-id "$i"; for i in $(seq 2 6); do   hammer content-view add-repository --organization-id 1   --name "CentOS_8"   --product "CentOS 8 Linux for x86_64"   --repository-id "$i";
+  132  for i in $(seq 2 6); do   hammer content-view add-repository --organization-id 1   --name "CentOS_8"   --product "CentOS 8 Linux for x86_64"   --repository-id "$i"; for i in $(seq 2 6); do   hammer content-view add-repository --organization-id 1   --name "CentOS_8"   --product "CentOS 8 Linux for x86_64"   --repository-id "$i"; done;
+  133  for i in $(seq 2 6); do   hammer content-view add-repository --organization-id 1   --name "CentOS_8"   --product "CentOS 8 Linux for x86_64"   --repository-id "$i"; done
+  134  hammer content-view publish --organization-id 1   --name "CentOS_8"   --description "Publishing repositories"
+  135  hammer lifecycle-environment list --organization-id 1
+  136  hammer activation-key create --organization-id 1   --name "centos8"   --description "CentOS 8 Activation Key"   --lifecycle-environment "Library"   --content-view "CentOS_8"   --unlimited-hosts
+  137  Ahammer subscription list --organization-id 1
+  138  hammer subscription list --organization-id 1
+  139  hammer activation-key add-subscription --organization-id 1   --name "centos8"   --quantity "1"   --subscription-id 1
+  140  subscription-manager identity
+  141  rpm -Uvh http://foreman.internal-lab.net/pub/katello-ca-consumer-latest.noarch.rpm
+  142  subscription-manager register --org="Lab" --activationkey="centos8"
+
+
+  137  hammer subscription list --organization-id 1
+  138  hammer subscription list --organization-id 1
+  139  hammer activation-key add-subscription --organization-id 1   --name "centos8"   --quantity "1"   --subscription-id 1
+  140  subscription-manager identity
+  141  rpm -Uvh http://foreman.internal-lab.net/pub/katello-ca-consumer-latest.noarch.rpm
+  142  subscription-manager register --org="Lab" --activationkey="centos8"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="monitoring"><a class="anchor" href="#monitoring"></a>Monitoring</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Link:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://community.theforeman.org/t/monitoring-foreman-with-prometheus/16466" class="bare">https://community.theforeman.org/t/monitoring-foreman-with-prometheus/16466</a></p>
+</li>
+<li>
+<p><a href="https://community.theforeman.org/t/monitoring-foreman-with-prometheus-via-statsd/21508" class="bare">https://community.theforeman.org/t/monitoring-foreman-with-prometheus-via-statsd/21508</a></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+statsd is prefered than prometheus
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Install package</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install foreman-telemetry</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Enable prometheus in settings.yml</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">:telemetry:
+ :prometheus:
+ :enabled: true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Issues</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>RAM</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Insufficient memory for tuning size
+Tuning profile 'default' requires at least 8 GB of memory and 1 CPU cores</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Package</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Failed to ensure foreman-selinux, katello-selinux, candlepin-selinux, pulpcore-selinux are installed</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://community.theforeman.org/t/pulpcore-selinux-failed-to-install-in-new-installation/26631" class="bare">https://community.theforeman.org/t/pulpcore-selinux-failed-to-install-in-new-installation/26631</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">yum install selinux-policy</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.theforeman.org/3.0/Installing_Server_on_Red_Hat/index-katello.html#repositories-centos-8" class="bare">https://docs.theforeman.org/3.0/Installing_Server_on_Red_Hat/index-katello.html#repositories-centos-8</a> not followed properly&#8230;&#8203;
+<a href="https://docs.theforeman.org/nightly/Quickstart_Guide/index-katello.html" class="bare">https://docs.theforeman.org/nightly/Quickstart_Guide/index-katello.html</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Centos 8 - Foreman 3.0 Katello 4.2</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">2022-05-16 21:23:20 [NOTICE] [configure] 1500 configuration steps out of 1725 steps complete.
+2022-05-16 21:24:04 [ERROR ] [configure] Error making PUT request to Foreman at https://foreman.internal-lab.net/api/v2/instance_hosts/foreman.internal-lab.net: Response: 404 Not Found: The requested resource was not found in Foreman at foreman.internal-lab.net
+2022-05-16 21:24:04 [ERROR ] [configure] /Stage[main]/Foreman::Register/Foreman_instance_host[foreman-foreman.internal-lab.net]/ensure: change from 'absent' to 'present' failed: Error making PUT request to Foreman at https://foreman.internal-lab.net/api/v2/instance_hosts/foreman.internal-lab.net: Response: 404 Not Found: The requested resource was not found in Foreman at foreman.internal-lab.net
+2022-05-16 21:25:16 [ERROR ] [configure] Error making PUT request to Foreman at https://foreman.internal-lab.net/api/v2/smart_proxies/1/hosts/1: Response: 404 Not Found: The requested resource was not found in Foreman at foreman.internal-lab.net
+2022-05-16 21:25:16 [ERROR ] [configure] /Stage[main]/Foreman_proxy::Register/Foreman_smartproxy_host[foreman-proxy-foreman.internal-lab.net]/ensure: change from 'absent' to 'present' failed: Error making PUT request to Foreman at https://foreman.internal-lab.net/api/v2/smart_proxies/1/hosts/1: Response: 404 Not Found: The requested resource was not found in Foreman at foreman.internal-lab.net
+2022-05-16 21:26:52 [NOTICE] [configure] System configuration has finished.
+
+There were errors detected during install.
+ Please address the errors and re-run the installer to ensure the system is properly configured.
+ Failing to do so is likely to result in broken functionality.
+
+The full log is at /var/log/foreman-installer/katello.log</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Centos 8 - Night 4.5.0-0.5</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">2022-05-16 22:10:06 [NOTICE] [configure] Starting system configuration.
+2022-05-16 22:11:16 [ERROR ] [configure] Execution of '/bin/dnf -d 0 -e 1 -y install katello' returned 1: Error:
+2022-05-16 22:11:16 [ERROR ] [configure] Problem: package katello-4.5.0-0.1.master.el8.noarch requires rubygem-katello, but none of the providers can be installed</code></pre>
+</div>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="firewalld.html">Firewalld</a></span>
+  <span class="next"><a href="freeipa.html">FreeIPA</a></span>
+</nav>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring</a></p>
+</footer>
+<script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+<script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
+<script async src="../../search-index.js"></script>
+  </body>
+</html>
