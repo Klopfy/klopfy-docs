@@ -6,3 +6,19 @@ podman run -v $PWD:/antora:Z --rm -it antora/antora ash
 npm i @antora/lunr-extension
 antora antora-playbook.yml
 ----
+
+
+[source, dockerfile]
+----
+"Dockerfile" 5L, 136B
+FROM registry.hub.docker.com/antora/antora:3.1.2
+
+# Install lunr that is not installed by default yet
+CMD npm i @antora/lunr-extension
+----
+
+[source, bash]
+----
+podman build . -t antora-lunar:3.1.2
+podman run -v $PWD:/antora --rm -it localhost/antora-lunar:3.1.2 antora antora-playbook.yml
+----
