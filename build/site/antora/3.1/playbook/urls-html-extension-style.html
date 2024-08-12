@@ -6,25 +6,28 @@
     <title>HTML Extension Styles :: Personal Documentation Site</title>
     <link rel="prev" href="configure-urls.html">
     <link rel="next" href="urls-latest-version-segment.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -848,7 +856,7 @@
 <div class="sectionbody">
 <div class="paragraph">
 <p>Antora allows you to customize the file extension used in the URL of HTML pages.
-By default, the URL will end with <em class="ext">.html</em>, mirroring the name of the the published file.
+By default, the URL will end with <em class="ext">.html</em>, mirroring the name of the published file.
 If you want to &#8220;prettify&#8221; the URL by hiding the extension for SEO or other reasons, you can configure Antora to do so.
 You either have the option to drop the extension outright or to replace the extension with forward slash (a technique known as indexify).
 When using either of these options, Antora will also drop the last URL segment if the source page is named <em class="path">index.adoc</em>.
@@ -880,13 +888,15 @@ It&#8217;s configured under the <a href="configure-urls.html" class="xref page">
 <p>Published page URLs are displayed with the <em>.html</em> extension, i.e., <em class="path">https://base-url.com/component/version/module/my-file.html</em>.
 Antora automatically applies this style when <code>html_extension_style</code> isn&#8217;t set in the playbook or via the CLI.</p>
 </dd>
-<dt class="hdlist1"><code>drop</code></dt>
-<dd>
-<p>The <em>.html</em> extension is dropped from the end of the published page URLs, i.e., <em class="path">https://base-url.com/component/version/module/my-file</em>.</p>
-</dd>
 <dt class="hdlist1"><code>indexify</code></dt>
 <dd>
-<p>The <em>.html</em> extension is dropped and a forward slash (<code>/</code>) is appended to the end of the published page URLs, i.e., <em class="path">https://base-url.com/component/version/module/my-file/</em>.</p>
+<p>The <em>.html</em> extension is dropped and a forward slash (<code>/</code>) is appended to the end of the published page URLs, i.e., <em class="path">https://base-url.com/component/version/module/my-file/</em>.
+This is the preferred style if you don&#8217;t want the <em>.html</em> extension to appear in URLs.</p>
+</dd>
+<dt class="hdlist1"><code>drop</code></dt>
+<dd>
+<p>The <em>.html</em> extension is dropped from the end of the published page URLs, i.e., <em class="path">https://base-url.com/component/version/module/my-file</em>.
+This style requires support from the web server and should only be used if you&#8217;re comfortable applying the necessary web server configuration.</p>
 </dd>
 </dl>
 </div>
@@ -946,10 +956,36 @@ urls:
 </div>
 <div class="paragraph">
 <p>When <code>drop</code> is applied, the site&#8217;s published URLs don&#8217;t end with the extension <em>.html</em>.
-This results in the URL for the page <em class="path">my-file.adoc</em> to be displayed in a browser as <em class="path">https://example.com/component/version/module/my-file</em>.</p>
+This results in the URL for the page <em class="path">my-file.adoc</em> to be displayed in a browser as <em class="path">https://example.com/component/version/module/my-file</em>.
+In order for the site to work properly when using this style, you must view the site through a web server.
+You also need to configure the web server to look for a file with the <em>.html</em> extension.</p>
+</div>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Not all web servers have the ability to support extensionless HTML URLs.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>To locally preview all the features of a site, such as redirects and the 404 page, when the style is <code>drop</code>, you&#8217;ll need to <a href="../preview-site.html" class="xref page">run a local server</a>.</p>
+<p>If you&#8217;re using nginx, you need to add the following directive to the <code>location /</code> stanza in the configuration for your host:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-nginx hljs" data-lang="nginx">location / {
+  # ...
+  try_files $uri $uri.html $uri/index.html = 404;
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This directive tells nginx to first look for the requested file, then look for the same file with the <em>.html</em> extension added, then look for a file named <em class="path">index.html</em> in a directory that matches the requested file.
+These attempts match the layout of the published files.</p>
 </div>
 </div>
 </div>
@@ -965,8 +1001,10 @@ This results in the URL for the page <em class="path">my-file.adoc</em> to be di
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

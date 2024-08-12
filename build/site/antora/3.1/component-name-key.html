@@ -6,25 +6,28 @@
     <title>Name Key :: Personal Documentation Site</title>
     <link rel="prev" href="component-name-and-version.html">
     <link rel="next" href="component-version-key.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -867,7 +875,7 @@ Antora uses the name:</p>
 <div class="ulist">
 <ul>
 <li>
-<p>as the <a href="how-antora-builds-urls.html#component" class="xref page">component segment</a> in page and asset URLs, unless the name of the component is <em>ROOT</em>.</p>
+<p>as the <a href="how-antora-builds-urls.html#component" class="xref page">component segment</a> in page and asset URLs, unless <a href="#root-component">the name of the component is <em>ROOT</em></a>.</p>
 </li>
 </ul>
 </div>
@@ -887,7 +895,7 @@ the first breadcrumb position on a component version&#8217;s pages</p>
 </div>
 <div class="paragraph">
 <p>Note that component name is case sensitive.
-This means that you have two components with the same name that only different in case, Antora will treat them as different components.</p>
+This means that if you have two components with the same name that only are different in case, Antora will treat them as different components.</p>
 </div>
 <div class="paragraph">
 <p>Content writers use the name as the <a href="page/resource-id-coordinates.html#id-component" class="xref page">component coordinate in resource IDs</a> when referencing a resource in another documentation component.</p>
@@ -930,8 +938,8 @@ To ensure portability between host platforms, letters used in the <code>name</co
 <i class="fa icon-important" title="Important"></i>
 </td>
 <td class="content">
-We <strong>strongly</strong> encouraged you to select a name that only consists of <em>lowercase</em> characters.
-Component names, except for the special <em>ROOT</em> value, are used in your site&#8217;s URLs, therefore, using consistent casing makes the component name, and thus your site, more portable.
+We <strong>strongly</strong> encourage you to select a name that only consists of <em>lowercase</em> characters.
+Component names, except for <a href="#root-component">the special <em>ROOT</em> value</a>, are used in your site&#8217;s URLs, therefore, using consistent casing makes the component name, and thus your site, more portable.
 That&#8217;s because some file systems, and thus the web server running on it, can&#8217;t distinguish between uppercase and lowercase characters.
 </td>
 </tr>
@@ -943,6 +951,80 @@ The value <strong>cannot</strong> be empty.</p>
 </div>
 <div class="paragraph">
 <p>See <a href="component-title.html" class="xref page">Customize the Title</a> to learn how to display a name that contains spaces, uppercase letters, and other characters in your site&#8217;s UI.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="root-component"><a class="anchor" href="#root-component"></a>ROOT component</h3>
+<div class="paragraph">
+<p>When a component&#8217;s name is set to <em>ROOT</em> and its version is set to <code>~</code> in its <em class="path">antora.yml</em>, then that component will be placed directly at the site&#8217;s root.
+It will not be placed inside a folder named <code>ROOT</code>.
+This is analogous to how modules named <em>ROOT</em> are placed at the root of their component.</p>
+</div>
+<div class="paragraph">
+<p>Like other components, a <em>ROOT</em> component must have an <em class="path">antora.yml</em> file and a <em class="path">modules</em> folder.
+Let&#8217;s re-use the example from <a href="module-url-segment.html#ex-modules" class="xref page">Module Segment in Page URLs</a>:</p>
+</div>
+<div id="ex-modules" class="listingblock">
+<div class="content">
+<pre>📒 repository
+  📄 antora.yml # name: ROOT and version: ~
+  📂 modules
+    📂 admin
+      📂 pages
+        📄 user-management.adoc
+      📄 nav.adoc
+    📂 ROOT
+      📁 images
+      📂 pages
+        📄 deploy.adoc
+        📄 index.adoc
+      📄 nav.adoc</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But now let&#8217;s instead assume that this component is named <em>ROOT</em> instead of <em>hyperlemur</em>, and its version set to <code>~</code>.
+Here is what the URLs of the pages would be (assuming that <code>html_extension_style</code> is set to <code>default</code> in your playbook):</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1"><em class="path">repository/modules/ROOT/pages/index.adoc</em></dt>
+<dd>
+<p>https://my-company.com/index.html (which means it will also be found at https://my-company.com)</p>
+</dd>
+<dt class="hdlist1"><em class="path">repository/modules/ROOT/pages/deploy.adoc</em></dt>
+<dd>
+<p>https://my-company.com/deploy.html</p>
+</dd>
+<dt class="hdlist1"><em class="path">repository/modules/admin/pages/user-management.adoc</em></dt>
+<dd>
+<p>https://my-company.com/admin/user-management.html</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Because both the component name <em>ROOT</em> and the module name <em>ROOT</em> are excluded from URLs, the pages in the <em>ROOT</em> component&#8217;s <em>ROOT</em> module live directly at your site&#8217;s root, with <em class="path">root_component/modules/ROOT/pages/index.adoc</em> serving as the site&#8217;s home page.
+That means that the index.adoc page in the ROOT module of the ROOT component acts as the site start page <strong>without</strong> having to specify it (no additional configuration is required).</p>
+</div>
+<div class="paragraph">
+<p>If the ROOT component were to be versioned (i.e., have a non-empty version), then the files in that component version would be placed inside the version folder at the root of the site.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+Because the <em>ROOT</em> component&#8217;s name does not appear in URLs, its modules are effectively scoped under your site&#8217;s root.
+This means it&#8217;s possible for pages in the <em>ROOT</em> component to conflict with pages in a named component.
+For instance, the file <em class="path">modules/xyz/pages/index.adoc</em> in the (unversioned) <em>ROOT</em> component and the file <em class="path">modules/ROOT/pages/index.adoc</em> in the (unversioned) <em>xyz</em> component will both resolve to the URL https://my-company.com/xyz/index.html, which is invalid.
+Therefore, you should be mindful of this situation when using modules in the <em>ROOT</em> component.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Since <em>ROOT</em> is not a user-friendly title for a component, you should also set the title in <em class="path">antora.yml</em>, as demonstrated in <a href="component-title.html" class="xref page">Customize the Title</a>.</p>
 </div>
 </div>
 </div>
@@ -959,8 +1041,10 @@ The value <strong>cannot</strong> be empty.</p>
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

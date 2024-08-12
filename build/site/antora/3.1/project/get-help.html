@@ -6,25 +6,28 @@
     <title>Get Help :: Personal Documentation Site</title>
     <link rel="prev" href="../extend/supported-components.html">
     <link rel="next" href="../security-bulletins.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -855,9 +863,11 @@ We encourage you to report issues, ask questions, share ideas, or discuss other 
 <h2 id="chat"><a class="anchor" href="#chat"></a>Chat</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><strong>The project chat is the preferred means of communication for all Antora users.</strong>
-This policy helps keep the project sustainable.
-If you want to ask for help, share feedback, or exchange ideas with project maintainers and fellow community members in real time, please join us in the project chat.</p>
+<p><strong>The project chat is the preferred means of communication for all users of Antora.</strong>
+This policy helps keep the project sustainable.</p>
+</div>
+<div class="paragraph">
+<p>If you want to ask for help, share feedback, or exchange ideas with project maintainers and fellow community members in real time, please join us in the project chat.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -867,14 +877,64 @@ If you want to ask for help, share feedback, or exchange ideas with project main
 </ul>
 </div>
 <div class="paragraph">
-<p>The chat is partitioned into streams.
-If you find an active discussion that matches the topic of your post, feel free to join that discussion.
-Otherwise, please select a stream most relevant to your topic, click &#8220;New Topic&#8221;, enter a subject, then write your post.
-If you aren&#8217;t sure where to post, please create a new topic in the <code>#users</code> stream and a moderator may choose to reclassify it.</p>
+<p>The chat is partitioned into streams by subject matter.
+This partitioning helps to keep conversations organized and makes it possible to filter topics to follow.
+When you first join, spend a few minutes to get familiar with where topics are being discussed.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Please do not send direct messages to the maintainers asking for help with Antora.
+The project maintainers do not provide 1-on-1 support.
+All support should be done in the public streams, most often the <code>#users</code> stream.
+Direct messages should only be used for personal matters.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>The discussions in the project chat are archived, but there&#8217;s no guarantee those logs will be saved indefinitely.
-Understand that users participate in the project chat voluntarily, so please be respectful of their time and interest.</p>
+<p>Before starting a new topic, use the filter or search feature to look for existing topics before starting a new one.
+You may find the information you&#8217;re seeking within the discussions that have already taken place.
+If you find an ongoing (i.e., unresolved) discussion that matches the topic of your post, feel free to join in that discussion.</p>
+</div>
+<div class="paragraph">
+<p>If you can&#8217;t find an existing topic that answers your question, or it&#8217;s already been marked as resolved, you can start a new topic.
+We ask that you select an appropriate stream before you create a new topic.
+If you aren&#8217;t sure where to post, create a new topic in the <code>#users</code> stream and a moderator will reclassify it if necessary.</p>
+</div>
+<div class="paragraph">
+<p>Once you&#8217;ve selected a stream, click &#8220;New Topic&#8221;, enter a subject, write your post, then click &#8220;Send&#8221;.
+You can also select a stream after you click &#8220;New Topic&#8221;.</p>
+</div>
+<div class="paragraph">
+<p>The discussions in the project chat are archived and public.
+There&#8217;s no guarantee the logs will be saved indefinitely, though we do plan keep them as long as we&#8217;re permitted to do so.</p>
+</div>
+<div class="paragraph">
+<p>The project chat is not 1-on-1 support.
+You&#8217;re in a public space.
+Users participate in the project chat voluntarily.
+Please be respectful of their time and interests.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Do not <code>@</code> mention someone when writing a message unless a) the subject matter absolutely requires the attention of that person or b) that person has already replied to the topic and is interacting with you.
+Using the <code>@</code> mention to draw attention to your question is not courteous to that person or fair to others participating.
+You&#8217;re free to post your message to the community at large (no <code>@</code> mention).
+If someone has something to share in response, they will do so if and when they have time.
+You can reference someone without notifying them using the <code>@_</code> prefix, which is considered acceptable conduct.
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
@@ -938,8 +998,10 @@ When you talk about Antora on Twitter, you can mention the official account for 
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

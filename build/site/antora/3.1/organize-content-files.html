@@ -6,25 +6,28 @@
     <title>How to Organize Your Content Files :: Personal Documentation Site</title>
     <link rel="prev" href="install/supported-platforms.html">
     <link rel="next" href="content-source-repositories.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -935,6 +943,30 @@ The association between where the source file is found, where the published file
 <p>See <a href="component-version.html" class="xref page">What&#8217;s a component version?</a> and <a href="component-version-descriptor.html" class="xref page">What&#8217;s antora.yml?</a> to learn how to assign a component name, version and other optional information to groups of content source files.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="git-refnames"><a class="anchor" href="#git-refnames"></a>git refnames</h3>
+<div class="paragraph">
+<p>git refnames, which includes the names of branches and tags, should only contain characters that do not need to be URL encoded.
+This rule is not enforced by git, but violating it can cause subtle problems in Antora.</p>
+</div>
+<div class="paragraph">
+<p>While the refname does not appear in the URL of published resources, it is used in references back to the file&#8217;s origin.
+Specifically, using characters in the refname which have to be URL encoded complicates the assembly of the edit URL for pages.</p>
+</div>
+<div class="paragraph">
+<p>As an example, the character <code>#</code> violates this rule, which would have to be encoded as <code>%23</code>.
+Although Antora will happily build the edit URL to include this character, the URL will not be interpreted as expected by the browser.
+That&#8217;s because <code>#</code> marks the boundary between the URL that&#8217;s sent to the server and the fragment that&#8217;s only seen by the browser.
+The result will be an incomplete URL and thus a 404 page.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s acceptable to use the universal directory separator, <code>/</code>, in refnames.
+By doing so, it effectively organizes the refs into a folder structure (e.g., <code>r/3.0.x</code>).
+However, this strategy can impact refname matching.
+The <code>*</code> character in a refname pattern does not match <code>/</code> (it does not cross the boundary of a folder).
+Therefore, to match a refname such as <code>r/3.0.x</code>, you must use the pattern <code>r/*</code> instead of <code>r*</code>.</p>
+</div>
+</div>
 </div>
 </div>
 <nav class="pagination">
@@ -949,8 +981,10 @@ The association between where the source file is found, where the published file
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

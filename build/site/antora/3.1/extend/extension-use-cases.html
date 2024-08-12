@@ -6,25 +6,28 @@
     <title>Extension Use Cases :: Personal Documentation Site</title>
     <link rel="prev" href="generator-context-reference.html">
     <link rel="next" href="supported-components.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -856,6 +864,104 @@ Each section introduces a different use case and presents the extension code you
 </div>
 </div>
 <div class="sect1">
+<h2 id="set-global-asciidoc-attributes"><a class="anchor" href="#set-global-asciidoc-attributes"></a>Set global AsciiDoc attributes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you want to define global AsciiDoc attributes that dynamic values, you can do using an extension.
+The playbook holds the AsciiDoc config object, which itself contains the global AsciiDoc attributes.
+An extension can listen for the <code>playbookBuilt</code> event and add attributes to this map.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 1. set-global-asciidoc-attributes-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function () {
+  this.on('beforeProcess', ({ siteAsciiDocConfig }) =&gt; {
+    const buildDate = new Date().toISOString()
+    siteAsciiDocConfig.attributes['build-date'] = buildDate
+  })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The extension could read these values from a file or environment variables as well.</p>
+</div>
+<div class="paragraph">
+<p>If you need to set AsciiDoc attributes that are scoped to a component version, then you&#8217;ll need to listen for the <code>contentClassified</code> event instead.
+From there, you can access the AsciiDoc attributes form the <code>asciidoc</code> property on a component version object.
+You can look up a component version by name and version using the <code>getComponentVersion</code> method on the content catalog object.
+Alternately, you can access component versions from the <code>versions</code> property on each component returned by the <code>getComponents</code> method on the content catalog object.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="print-asciidoc-attributes"><a class="anchor" href="#print-asciidoc-attributes"></a>Print AsciiDoc attributes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you&#8217;re troubleshooting your site, you can use an extension to generate a report of AsciiDoc attributes at the site level and those per component verison.
+When making this report, you have a choice of whether you want to show the AsciiDoc attributes as they would be available to a page (aka compiled) or as defined (aka uncompiled)</p>
+</div>
+<div class="paragraph">
+<p>You can use the following extension to print all the AsciiDoc attributes compiled for each component version.
+The extension also prints all the attributes compiled from the playbook, though keep in mind these are integrated into the attributes for each component version.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 2. print-compiled-asciidoc-attributes-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function () {
+  this.once('contentClassified', ({ siteAsciiDocConfig, contentCatalog }) =&gt; {
+    console.log('site-wide attributes (compiled)')
+    console.log(siteAsciiDocConfig.attributes)
+    contentCatalog.getComponents().forEach((component) =&gt; {
+      component.versions.forEach((componentVersion) =&gt; {
+        console.log(`${componentVersion.version}@${componentVersion.name} attributes (compiled)`)
+        if (componentVersion.asciidoc === siteAsciiDocConfig) {
+          console.log('same as site-wide attributes')
+        } else {
+          console.log(componentVersion.asciidoc.attributes)
+        }
+      })
+    })
+  })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can use the following extension to print all the AsciiDoc attributes as defined in the playbook and in the antora.yml file for each component version (by origin).</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 3. print-defined-asciidoc-attributes-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function () {
+  this.once('contentClassified', ({ playbook, contentCatalog }) =&gt; {
+    console.log('site-wide attributes (as defined in playbook)')
+    console.log(playbook.asciidoc.attributes)
+    contentCatalog.getComponents().forEach((component) =&gt; {
+      component.versions.forEach((componentVersion) =&gt; {
+        getUniqueOrigins(contentCatalog, componentVersion).forEach((origin) =&gt; {
+          console.log(`${componentVersion.version}@${componentVersion.name} attributes (as defined in antora.yml)`)
+          console.log(origin.descriptor.asciidoc?.attributes || {})
+        })
+      })
+    })
+  })
+}
+
+function getUniqueOrigins (contentCatalog, componentVersion) {
+  return contentCatalog.findBy({ component: componentVersion.name, version: componentVersion.version })
+    .reduce((origins, file) =&gt; {
+      const origin = file.src.origin
+      if (origin &amp;&amp; !origins.includes(origin)) origins.push(origin)
+      return origins
+    }, [])
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You may find it useful to make use of these collections of AsciiDoc attributes when writing other extensions.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="exclude-private-content-sources"><a class="anchor" href="#exclude-private-content-sources"></a>Exclude private content sources</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -869,7 +975,7 @@ That convention is to use an SSH URL that starts with <code>git@</code>.
 Antora automatically converts SSH URLs to HTTP URLs, so the use of this syntax merely serves as a hint to users and extensions that the URL is private and is going to request authentication.</p>
 </div>
 <div class="listingblock">
-<div class="title">Example 1. exclude-private-content-sources-extension.js</div>
+<div class="title">Example 4. exclude-private-content-sources-extension.js</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function () {
   this.on('playbookBuilt', function ({ playbook }) {
@@ -887,6 +993,68 @@ The call to <code>this.updateVariables</code> to replace the <code>playbook</cod
 </div>
 </div>
 <div class="sect1">
+<h2 id="unpublish-flagged-pages"><a class="anchor" href="#unpublish-flagged-pages"></a>Unpublish flagged pages</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you don&#8217;t want a page to ever be published, you can prefix the filename with an underscore (e.g., _hidden.adoc).
+However, if you only want the page to be unpublished conditionally, then you need to reach for an extension.</p>
+</div>
+<div class="paragraph">
+<p>When using this extension, any page that sets the <code>page-unpublish</code> page attribute will not be published (meaning it will be unpublished).
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">= Secret Page
+:page-unpublish:
+
+This page will not be published.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can set the <code>page-unpublish</code> page attribute based on the presence (or absence) of another AsciiDoc attribute, perhaps one set in the playbook or as a CLI option.
+For example:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">= Secret Page
+ifndef::include-secret[:page-unpublish:]
+
+This page will not be published.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This extension runs during the <code>documentsConverted</code> event.
+This is the earliest event that provides access to the AsciiDoc metadata on the virtual file.
+The extension iterates over all publishable pages in the content catalog and unpublishes any page that sets the <code>page-unpublish</code> attribute.
+To unpublish the page, the extension removes the <code>out</code> property on the virtual file.
+If the <code>out</code> property is absent, the page will not be published.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 5. page-unpublish-tag-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function () {
+  this.on('documentsConverted', ({ contentCatalog }) =&gt; {
+    contentCatalog.getPages((page) =&gt; page.out).forEach((page) =&gt; {
+      if (page.asciidoc?.attributes['page-unpublish'] != null) {
+        delete page.out
+      }
+    })
+  })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Keep in mind that there may be references to the unpublished page.
+While they will be resolved by Antora, the target of the reference will not be available, which will result in a 404 response from the web server.</p>
+</div>
+<div class="paragraph">
+<p>For more fine-grained control over when a page is unpublished, you could write an extension that replaces the <code>convertDocument</code> or <code>convertDocuments</code> functions.
+Doing so would allow you to unpublish the page before references to it from other pages are resolved so that they appear as warnings.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="report-unlisted-pages"><a class="anchor" href="#report-unlisted-pages"></a>Report unlisted pages</h2>
 <div class="sectionbody">
 <div class="paragraph">
@@ -899,7 +1067,7 @@ It iterates over each component version, retrieves a flattened list of its inter
 If it finds any such pages, it creates a report of them, optionally adding them to the navigation.</p>
 </div>
 <div class="listingblock">
-<div class="title">Example 2. unlisted-pages-extension.js</div>
+<div class="title">Example 6. unlisted-pages-extension.js</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function ({ config }) {
   const { addToNavigation, unlistedPagesHeading = 'Unlisted Pages' } = config
@@ -921,7 +1089,10 @@ If it finds any such pages, it creates a report of them, optionally adding them 
             nav.push({
               content: unlistedPagesHeading,
               items: unlistedPages.map((page) =&gt; {
-                return { content: page.asciidoc.navtitle, url: page.pub.url, urlType: 'internal' }
+                const title = 'navtitle' in page.asciidoc
+                  ? page.asciidoc.navtitle
+                  : (page.src.module === 'ROOT' ? '' : page.src.module + ':') + page.src.relative
+                return { content: title, url: page.pub.url, urlType: 'internal' }
               }),
               root: true,
             })
@@ -958,7 +1129,7 @@ It iterates over each component version, retrieves a flattened list of its inter
 If it finds any such pages, it unpublishes them.</p>
 </div>
 <div class="listingblock">
-<div class="title">Example 3. unpublish-unlisted-pages-extension.js</div>
+<div class="title">Example 7. unpublish-unlisted-pages-extension.js</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function ({ config }) {
   this
@@ -989,8 +1160,207 @@ function getNavEntriesByUrl (items = [], accum = {}) {
 </div>
 </div>
 <div class="paragraph">
-<p>By removing the <code>out</code> property from the page, it prevents the page from being published, but is still referencable using an include directive.
+<p>By removing the <code>out</code> property from the page, it prevents the page from being published, but is still referenceable using an include directive.
 Alternately, you could choose to remove the page entirely from the content catalog.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="list-discovered-component-versions"><a class="anchor" href="#list-discovered-component-versions"></a>List discovered component versions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>When you&#8217;re setting up your playbook, you may find that Antora is not discovering some of your component versions.
+Using an extension, it&#8217;s possible to list the component versions Antora discovers during content aggregation along with the content sources it took them from.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 8. discovered-component-versions-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function () {
+  this.once('contentAggregated', ({ contentAggregate }) =&gt; {
+    console.log('Discovered the following component versions')
+    contentAggregate.forEach((bucket) =&gt; {
+      const sources = bucket.origins.map(({ url, refname }) =&gt; ({ url, refname }))
+      console.log({ name: bucket.name, version: bucket.version, files: bucket.files.length, sources })
+    })
+  })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If an entry is missing, then you know you may need to tune the content source definitions in your playbook.</p>
+</div>
+<div class="paragraph">
+<p>For more information, you can print the whole bucket entry.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="resolve-attribute-references-in-attachments"><a class="anchor" href="#resolve-attribute-references-in-attachments"></a>Resolve attribute references in attachments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Files in the attachment family are passed directly through to the output site.
+Antora does not resolve AsciiDoc attribute references in attachment files.
+(Asciidoctor, on the other hand, will resolve AsciiDoc attribute references in the attachment&#8217;s contents only if the attachment is included in an AsciiDoc page where the attribute substitution is enabled.)
+You can use an Antora extension to have Antora resolve attribute references in the attachment file before that file is published.</p>
+</div>
+<div class="paragraph">
+<p>This extension runs during the <code>contentClassified</code> event, which is when attachment files are first identified and classified.
+It iterates over all attachments and resolves any references to attributes scoped to that attachment&#8217;s component version.
+If any changes were made to the contents of the file, it replaces the contents on the virtual file with the updated value.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 9. resolve-attributes-references-in-attachments-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">module.exports.register = function () {
+  this.on('contentClassified', ({ contentCatalog }) =&gt; {
+    const componentVersionTable = contentCatalog.getComponents().reduce((componentMap, component) =&gt; {
+      componentMap[component.name] = component.versions.reduce((versionMap, componentVersion) =&gt; {
+        versionMap[componentVersion.version] = componentVersion
+        return versionMap
+      }, {})
+      return componentMap
+    }, {})
+    contentCatalog.findBy({ family: 'attachment' }).forEach((attachment) =&gt; {
+      const componentVersion = componentVersionTable[attachment.src.component][attachment.src.version]
+      let attributes = componentVersion.asciidoc?.attributes
+      if (!attributes) return
+      attributes = Object.entries(attributes).reduce((accum, [name, val]) =&gt; {
+        accum[name] = val &amp;&amp; val.endsWith('@') ? val.slice(0, val.length - 1) : val
+        return accum
+      }, {})
+      let modified
+      const result = attachment.contents.toString().replace(/\{([\p{Alpha}\d_][\p{Alpha}\d_-]*)\}/gu, (match, name) =&gt; {
+        if (!(name in attributes)) return match
+        modified = true
+        let value = attributes[name]
+        if (value.endsWith('@')) value = value.slice(0, value.length - 1)
+        return value
+      })
+      if (modified) attachment.contents = Buffer.from(result)
+    })
+  })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This extension is only know to work with text-based attachments.
+You may need to modify this extension for it to work with binary files.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="convert-word-processor-attachments-to-pdf"><a class="anchor" href="#convert-word-processor-attachments-to-pdf"></a>Convert word processor attachments to PDF</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Much like AsciiDoc files (.adoc) are converted to HTML (.html) by Antora, you can do the same with attachments.
+This extension runs during the <code>contentClassified</code> event, which is when attachment files are first identified and classified.
+It iterates over all attachments in a word processor format (i.e., .docx, .odt, .fodt) and uses the <strong>libreoffcie</strong> command (LibreOffice in server mode) to convert each file to PDF.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 10. doc-to-pdf-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">const fsp = require('node:fs/promises')
+const ospath = require('node:path')
+const { posix: path } = ospath
+const { execFile } = require('node:child_process')
+
+module.exports.register = function () {
+  this.once('contentClassified', async ({ playbook, contentCatalog }) =&gt; {
+    const docExtnames = { '.docx': true, '.fodt': true, '.odt': true }
+    const filesToConvert = contentCatalog.getFiles().filter(({ src }) =&gt; src.family === 'attachment' &amp;&amp; docExtnames[src.extname])
+    if (!filesToConvert.length) return
+    const buildDirBase = ospath.join(playbook.dir, 'build/doc-to-pdf')
+    const convertArgs = ['--writer', '--convert-to', 'pdf']
+    const convertOpts = { cwd: buildDirBase, windowsHide: true }
+    try {
+      await fsp.mkdir(buildDirBase, { recursive: true })
+      await Promise.all(filesToConvert.map((file) =&gt; {
+        const sourceRelpath = `${file.src.component}-${file.src.module}-${file.out.basename}`
+        convertArgs.push(sourceRelpath)
+        return fsp.writeFile(ospath.join(buildDirBase, sourceRelpath), file.contents)
+      }))
+      await new Promise((resolve, reject) =&gt; {
+        execFile('libreoffice', convertArgs, convertOpts, (err, stderr, stdout) =&gt; {
+          if (!err) return resolve()
+          const splitIdx = stderr.indexOf('Usage: ')
+          if (~splitIdx) stderr = stderr.slice(0, splitIdx).trimEnd()
+          if (stderr) err.message += stderr
+          reject(err)
+        })
+      })
+      await Promise.all(filesToConvert.map((file) =&gt; {
+        file.out.path = path.join(file.out.dirname, (file.out.basename = file.out.basename.slice(0, -file.src.extname.length) + '.pdf'))
+        file.pub.url = file.pub.url.slice(0, -file.src.extname.length) + '.pdf'
+        const sourceRelpath = `${file.src.component}-${file.src.module}-${file.out.basename}`
+        return fsp.readFile(ospath.join(buildDirBase, sourceRelpath)).then((contents) =&gt; (file.contents = contents))
+      }))
+    } finally {
+      await fsp.rm(buildDirBase, { recursive: true, force: true })
+    }
+  })
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>By converting the files and updating the metadata, it&#8217;s possible to reference the source document using the xref macro.
+That reference will automatically translate to a link to the PDF in the generated site.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="export-content-to-file"><a class="anchor" href="#export-content-to-file"></a>Export content to file</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>If you are integrating with a search or AI engine, you may want to extract the plain text of the pages to a file along with the page url, title, and navigation path.
+You can use the following extension to do that as part of the site build.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 11. export-content-extension.js</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-js hljs" data-lang="js">const { parse: parseHTML } = require('node-html-parser')
+
+/**
+ * An Antora extension that exports the content of publishable pages in plain text to a JSON
+ * file along with the page URL and title.
+ */
+module.exports.register = function () {
+  this.once('navigationBuilt', ({ playbook, contentCatalog, siteCatalog }) =&gt; {
+    const siteUrl = playbook.site.url
+    const component = 'dfcs'
+    const version = ''
+    const componentVersion = contentCatalog.getComponentVersion(component, version)
+    const dfcsNavEntriesByUrl = getNavEntriesByUrl(componentVersion.navigation)
+    const pages = contentCatalog
+      .getPages((it) =&gt; it.src.component === component &amp;&amp; it.src.version === version &amp;&amp; it.pub)
+      .map((page) =&gt; {
+        const siteRelativeUrl = page.pub.url
+        const articleDom = parseHTML(`&lt;article&gt;${page.contents}&lt;/article&gt;`)
+        // TODO might want to apply the sentence newline replacement per paragraph
+        const text = articleDom.textContent.trim().replace(/\n(\s*\n)+/g, '\n\n').replace(/\.\n(?!\n)/g, '. ')
+        const path = [componentVersion.title]
+        path.push(...(dfcsNavEntriesByUrl[siteRelativeUrl]?.path?.map((it) =&gt; it.content) || []))
+        return { url: siteUrl + siteRelativeUrl, title: page.title, text, path }
+      })
+    siteCatalog.addFile({
+      contents: Buffer.from(JSON.stringify({ pages }, null, '  ')),
+      out: { path: 'site-content.json' },
+    })
+  })
+}
+
+function getNavEntriesByUrl (items = [], accum = {}, path = []) {
+  items.forEach((item) =&gt; {
+    if (item.urlType === 'internal') accum[item.url.split('#')[0]] = { item, path: path.concat(item) }
+    getNavEntriesByUrl(item.items, accum, item.content ? path.concat(item) : path)
+  })
+  return accum
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note that this extension relies on the <strong>node-html-parser</strong> package.
+You will need to include that in your site <em class="path">package.json</em> file in order to use this extension.
+In the future, Antora may provide a built-in HTML parser for extensions to use.</p>
 </div>
 </div>
 </div>
@@ -1006,8 +1376,10 @@ Alternately, you could choose to remove the page entirely from the content catal
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

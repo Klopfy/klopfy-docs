@@ -6,25 +6,28 @@
     <title>Publish to GitHub Pages :: Personal Documentation Site</title>
     <link rel="prev" href="sitemap.html">
     <link rel="next" href="publish-to-gitlab-pages.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -922,22 +930,8 @@ To do so, add the following <code>supplemental_files</code> block under the <cod
 <div class="paragraph">
 <p>This configuration defines files from memory.
 The first file, <em class="path">ui.yml</em>, tells Antora which files to promote to the root of the site (outside the UI folder) using the <code>static_files</code> key.
-The second file, <em class="path">.nojekyll</em>, writes to the root of the published site.
+The second file, <em class="path">.nojekyll</em>, gets written to the root of the published site.
 Since the <code>contents</code> key is absent, Antora will create an empty file (the equivalent of the <code>touch</code> command from above).</p>
-</div>
-<div class="admonitionblock caution">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-caution" title="Caution"></i>
-</td>
-<td class="content">
-The solution to use the supplemental UI to create the <em class="path">.nojekyll</em> file at the root of the published site will not work if you configure Antora to read the supplemental UI from a local directory.
-That&#8217;s because, in this case, Antora ignores files that begin with a dot (such as <em class="path">.nojekyll</em>), and thus won&#8217;t pick them up.
-Follow <a href="https://gitlab.com/antora/antora/-/issues/627">issue #627</a> to track the status of this bug.
-</td>
-</tr>
-</table>
 </div>
 </div>
 </div>
@@ -958,31 +952,48 @@ This workflow assumes that the name of the default branch of your playbook repos
 If your site uses different settings, you&#8217;ll need to update the values in the workflow file accordingly.</p>
 </div>
 <div id="github-actions-workflow" class="listingblock">
-<div class="title">Example 2. .github/workflow/publish.yml builds the Antora site and deploys it to GitHub Pages using GitHub Actions</div>
+<div class="title">Example 2. .github/workflows/publish.yml builds the Antora site and deploys it to GitHub Pages using GitHub Actions</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">name: Publish to GitHub Pages
 on:
   push:
     branches: [main]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+    - name: Configure Pages
+      uses: actions/configure-pages@v3
     - name: Install Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '18'
     - name: Install Antora
       run: npm i antora
     - name: Generate Site
       run: npx antora antora-playbook.yml
-    - name: Publish to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Upload Artifacts
+      uses: actions/upload-pages-artifact@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: build/site</code></pre>
+        path: build/site
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1000,35 +1011,102 @@ Once that&#8217;s done, return to the GitHub Actions workflow and configure it t
 The result is shown in <a href="#github-actions-workflow-with-lunr">Example 3</a>.</p>
 </div>
 <div id="github-actions-workflow-with-lunr" class="listingblock">
-<div class="title">Example 3. .github/workflow/publish.yml includes the Antora Lunr Extension</div>
+<div class="title">Example 3. .github/workflows/publish.yml includes the Antora Lunr Extension</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">name: Publish to GitHub Pages with Lunr Search Extension
 on:
   push:
     branches: [main]
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
+    - name: Configure Pages
+      uses: actions/configure-pages@v3
     - name: Install Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v4
       with:
-        node-version: '16'
-    - name: Install Antora and the Antora Lunr Extension
+        node-version: '18'
+    - name: Install Antora with the Antora Lunr Extension
       run: npm i antora @antora/lunr-extension
     - name: Generate Site
       run: npx antora antora-playbook.yml
-    - name: Publish to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v3
+    - name: Upload Artifacts
+      uses: actions/upload-pages-artifact@v2
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: build/site</code></pre>
+        path: build/site
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>To install and use a different version of the Antora Lunr Extension, append a version to the package name, such as <code>@antora/lunr-extension@1.0.0-alpha.5</code>.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="using-a-custom-domain"><a class="anchor" href="#using-a-custom-domain"></a>Using a custom domain</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>You can serve your site from a different URL than the default &lt;username&gt;.github.io using a Github Pages custom domain.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re publishing your site <a href="#using-github-actions">Using GitHub Actions</a> as the source, then you can configure your custom domain from the <span class="menuseq"><b class="menu">Settings</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">Pages</b></span> configuration screen in the GitHub web interface.
+No other action is required in the CI workflow.</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, if you&#8217;re publishing your site from a branch (e.g., gh-pages), then you need to write the custom domain to a CNAME file at the root of the site.
+In order to do so, add the following step to your GitHub Actions workflow file (or the equivalent for whatever CI pipeline you&#8217;re using) after running Antora.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- name: Create CNAME file
+  run: echo my-domain-name.com &gt; build/site/CNAME</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Alternately, you can use a supplemental UI to add the CNAME file, similar to how the .nojekyll file was added earlier.</p>
+</div>
+<div class="listingblock">
+<div class="title">Example 4. antora-playbook.yml that adds CNAME file using supplemental UI</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">ui:
+  bundle:
+    url: &lt;url-of-bundle-goes-here&gt;
+  supplemental_files:
+  - path: ui.yml
+    contents: |
+      static_files:
+      - CNAME
+  - path: CNAME
+    contents: |
+      my-domain-name.com</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This configuration defines files from memory.
+The first file, <em class="path">ui.yml</em>, tells Antora which files to promote to the root of the site (outside the UI folder) using the <code>static_files</code> key.
+The second file, <em class="path">CNAME</em>, gets written to the root of the published site and contains the custom domain name, as required by GitHub Pages when publishing from a branch.
+The benefit of this approach is that it does not require an extra step in the CI workflow.</p>
+</div>
+<div class="paragraph">
+<p>Refer to <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site" target="_blank" rel="noopener">Managing a custom domain for your GitHub Pages site</a> in the GitHub documentation for more information about using a custom domain and how to activate it.</p>
 </div>
 </div>
 </div>
@@ -1044,8 +1122,10 @@ jobs:
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

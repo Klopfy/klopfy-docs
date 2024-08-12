@@ -6,25 +6,28 @@
     <title>Assign Attributes to a Component Version :: Personal Documentation Site</title>
     <link rel="prev" href="component-with-no-version.html">
     <link rel="next" href="component-start-page.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -878,6 +886,11 @@ A playbook file usually has the word <em>playbook</em> in its filename, e.g., <e
 <p>A <a href="component-version-descriptor.html" class="xref page">component version descriptor</a> is where you configure the name, version, metadata, attributes, and navigation list of a <a href="component-version.html" class="xref page">component version</a>.
 A component version descriptor&#8217;s filename is always <em class="path">antora.yml</em>.</p>
 </div>
+<div class="paragraph">
+<p><em>For extension writers.</em>
+If no AsciiDoc attributes are defined in the component descriptor, the <code>asciidoc</code> property on the component version object will reference the site-wide AsciiDoc config object (i.e., <code>siteAsciiDocConfig</code>).
+If you plan to modify component version attributes, first check if the value of the <code>asciidoc</code> property matches (<code>===</code>) the site-wide object and make a deep copy of it if so.</p>
+</div>
 </td>
 </tr>
 </table>
@@ -927,7 +940,9 @@ Press the <kbd>spacebar</kbd> once after the colon, then type the value of the a
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>To assign the default value, or in the case of a boolean attribute, the <em>empty string</em> value, to a built-in attribute, type two consecutive single quotation marks (<code>''</code>) in the value field.</td>
+<td>To set an attribute without specifying an explicit value, assign an <em>empty string</em> by entering two consecutive single quotation marks (<code>''</code>) in the value part.
+For certain built-in attributes, an empty value is equivalent to the default value, though it depends on the attribute.
+Although using the boolean value <code>true</code> often works in this case, attribute values in AsciiDoc are strings, so it will likely be coerced to the string value <code>'true'</code>.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="5"></i><b>5</b></td>
@@ -982,12 +997,12 @@ An attribute is soft set by attaching the <code>@</code> modifier to the end of 
 </div>
 </div>
 <div class="sect2">
-<h3 id="references-in-values"><a class="anchor" href="#references-in-values"></a>Reference a component version attributes in attribute values</h3>
+<h3 id="references-in-values"><a class="anchor" href="#references-in-values"></a>Insert the value of another attribute</h3>
 <div class="paragraph">
-<p>The value of a component version attribute can contain an attribute reference to a <a href="playbook/asciidoc-attributes.html" class="xref page">site attribute</a> or another component version attribute already set in the same <em class="path">antora.yml</em> file using the AsciiDoc attribute reference syntax (e.g., <code>{site-title}</code>, <code>{page-level}</code>).</p>
+<p>The value of any component version attribute set earlier in the same <em class="path">antora.yml</em> file or the value of any <a href="playbook/asciidoc-attributes.html" class="xref page">site attribute</a> can be inserted into the value of a component version attribute using an AsciiDoc attribute reference (e.g., <code>{site-title}</code>, <code>{page-level}</code>).</p>
 </div>
 <div id="ex-attribute-value-references" class="listingblock">
-<div class="title">Example 3. Reference a component version attribute in a component version attribute value</div>
+<div class="title">Example 3. A component version attribute that references the value of another component version attribute</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">name: light
 title: Data Light
@@ -1033,7 +1048,7 @@ Each attribute is entered on its own line as a key-value pair under the <code>at
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
 <td>To hard unset an attribute, assign it the tilde symbol (<code>~</code>).
-The <code>~</code> is a reserved value that hard unsets a component version attribute.</td>
+<code>~</code> is shorthand in YAML for <code>nil</code>, which is a reserved value that hard unsets a site attribute.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1118,6 +1133,7 @@ However, soft set and unset component version attributes can be overridden from 
 <div class="paragraph">
 <p>Antora defines intrinsic page attributes from most of the keys in a component version descriptor file.
 For instance, Antora sets the built-in attribute <code>page-component-title</code> and assigns it the value specified by the <code>title</code> key.
+These attributes <em>cannot</em> be referenced by other attributes defined in <em class="path">antora.yml</em>, but can be referenced in any page within the same component version.
 See <a href="page/intrinsic-attributes.html#page-attributes" class="xref page">Intrinsic page attributes</a> for a complete list of the page attributes Antora automatically declares.</p>
 </div>
 <div class="paragraph">
@@ -1153,8 +1169,10 @@ Other attributes, such as <code>imagesdir</code>, are automatically set by Antor
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

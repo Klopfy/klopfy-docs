@@ -6,25 +6,28 @@
     <title>How Component Versions are Sorted :: Personal Documentation Site</title>
     <link rel="prev" href="version-facets.html">
     <link rel="next" href="distributed-component-version.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -867,13 +875,45 @@
 <h2 id="sort-docs-components"><a class="anchor" href="#sort-docs-components"></a>Docs component sort order</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Antora sorts component versions into <a href="component-version.html#docs-component" class="xref page">documentation components</a> according to the <a href="component-title.html" class="xref page">title key</a> defined in each component version&#8217;s <em class="path">antora.yml</em> file.
-If the <code>title</code> key isn&#8217;t set, Antora falls back to the <a href="component-name-key.html" class="xref page">name key</a> to sort the components.</p>
+<p>Antora groups component versions into <a href="component-version.html#docs-component" class="xref page">documentation components</a>.
+The sort order of components in the content catalog is not deterministic.
+However, when the docs components are accessed through the UI model (<code>site.components</code>), they are sorted in alphabetical order by title.
+The title of a component is defined by the <a href="component-title.html" class="xref page">title key</a> defined in each component version&#8217;s <em class="path">antora.yml</em> file.
+If the <code>title</code> key isn&#8217;t set, Antora falls back to the <a href="component-name-key.html" class="xref page">name key</a> when sorting the component.
+In each component, the versions are sorted according to the <a href="#version-sorting-rules">component version sorting rules</a>.</p>
 </div>
 <div class="paragraph">
-<p>Docs components are sorted in alphabetical order.
-The resulting alphabetical list of components is used for display purposes in the <a href="navigation/index.html#component-dropdown" class="xref page">component version selector menu</a>.
-Under each component title or name, a list of versions, sorted according to the <a href="#version-sorting-rules">component version sorting rules</a>, is presented in the menu.</p>
+<p>This sorted list of components is typically used by the UI to present a menu widget that the reader can use to navigate between different components and versions.
+Antora&#8217;s default UI provides such a widget.
+In the default UI, the list of versions for a given component is shown beneath each component&#8217;s title.</p>
+</div>
+<div class="paragraph">
+<p>Antora does not require that components and versions be displayed in this order.
+If you want them to be shown in a different order, you need to customize the UI template that generates this list.
+When customizing Antora&#8217;s default UI, you would need to edit the partial named <code>nav-explore</code> located at <em class="path">src/partials/nav-explore.hbs</em> in the UI project.
+The key fragment of that template is the iteration over <code>site.components</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hbs hljs" data-lang="hbs">{{#each site.components}}
+...
+{{/each}}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Antora&#8217;s default UI uses the order in which components are stored in the UI model.
+You can modify this order by passing the list of components to a custom helper function that you must also provide:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-hbs hljs" data-lang="hbs">{{#each (rearrange site.components 'component-b,component-a'}}
+...
+{{/each}}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You also have the choice of manually creating a menu entry for each component you want displayed.
+This strategy would also allow you to exclude certain components.</p>
 </div>
 </div>
 </div>
@@ -1054,8 +1094,10 @@ The latest version is available as the property <code>latest</code> in the <a hr
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

@@ -5,25 +5,28 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Prometheus :: Personal Documentation Site</title>
     <link rel="prev" href="node_exporter.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:homelab"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -48,12 +51,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="homelab" data-version="alpha">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../ansible.html">Homelab</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -118,7 +123,7 @@
   </div>
   <ul class="components">
     <li class="component">
-      <a class="title" href="../../../antora/3.1/index.html">Antora</a>
+      <div class="title"><a href="../../../antora/3.1/index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../antora/3.1/index.html">3.1</a>
@@ -126,7 +131,7 @@
       </ul>
     </li>
     <li class="component is-current">
-      <a class="title" href="../../main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../main/ansible.html">main</a>
@@ -159,8 +164,8 @@
     <a class="version is-current" href="prometheus.html">alpha</a>
   </div>
 </div>
-  <div class="edit-this-page"><a href="https://github.com/Klopfy/antora/blob/alpha/modules/ROOT/pages/monitoring/prometheus.adoc">Edit this Page</a></div>
-  </div>
+<div class="edit-this-page"><a href="https://github.com/Klopfy/antora/blob/alpha/modules/ROOT/pages/monitoring/prometheus.adoc">Edit this Page</a></div>
+</div>
   <div class="content">
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
   <div class="toc-menu"></div>
@@ -345,8 +350,10 @@ Was caused by:
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

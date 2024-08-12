@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  node:
+    image: docker.io/node:16
+    user: root
+    volumes:
+      - .:/opt/app
+    working_dir: /opt/app
+    entrypoint: "make"

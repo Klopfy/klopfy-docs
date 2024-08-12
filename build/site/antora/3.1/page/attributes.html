@@ -6,25 +6,28 @@
     <title>AsciiDoc Attributes in Antora :: Personal Documentation Site</title>
     <link rel="prev" href="title-and-metadata.html">
     <link rel="next" href="define-and-modify-attributes.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -905,18 +913,20 @@ Custom attributes work the same way in Antora.</p>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Where things get interesting is when the name of the attribute starts with <code>page-</code>.
-In this case, the attribute becomes a page attribute.</p>
+With this special designation, the attribute becomes a page attribute.</p>
 </div>
 <div class="paragraph">
-<p>To the AsciiDoc document, page attributes are just like any other attribute.
+<p>To the AsciiDoc document, page attributes are just like any other AsciiDoc attribute.
 For example, you can refer to the component for the current page using built-in page attribute <code>{page-version}</code>.
-Or you can define your own page attribute named <code>page-edition</code> and refer to it in the page using <code>{page-edition}</code>.</p>
+Or you can define your own page attribute named <code>page-edition</code> and refer to it in the page using <code>{page-edition}</code>.
+In this context, the <code>page-</code> prefix is not significant.</p>
 </div>
 <div class="paragraph">
-<p>What&#8217;s different about page attributes is that they get promoted to the page UI model so they can be accessed from a <a href="#antora-ui-default::templates.adoc#template-variables" class="xref unresolved">UI template</a> (using the expression <code>page.attributes.&lt;name&gt;</code>).
-Thus, a page attribute allows the author to pass metadata about a page to the UI, thus allowing it to be used outside of the AsciiDoc content.
-It&#8217;s even possible to read page attributes from other pages in the UI template.
-Attributes that are not prefixed with <code>page-</code> are not accessible in this way.</p>
+<p>Where this special designation comes into play is when the UI template is applied to the page&#8217;s contents.
+Page attributes get promoted to the page&#8217;s UI model so they can be accessed using the expression <code>page.attributes.&lt;name&gt;</code> within a <a href="#antora-ui-default::templates.adoc#template-variables" class="xref unresolved">UI template</a> (e.g., <em>layouts/default.hbs</em>).
+In effect, a page attribute allows the author to pass metadata defined using attributes either in the page&#8217;s header or in a configuration file (e.g., the Antora playbook), thus allowing that information to be used outside of the AsciiDoc document.
+It&#8217;s even possible to access page attributes from pages other than the current page in the UI template.
+Attributes that are not prefixed with <code>page-</code> are not accessible in this way (though it&#8217;s still possible to access all attributes using a UI helper).</p>
 </div>
 <div class="paragraph">
 <p>While page attributes are primarily custom attributes, Antora defines a handful of built-in page attributes to control Antora-specific features or get information about the current page.
@@ -936,8 +946,10 @@ See <a href="page-attributes.html" class="xref page">Page Attributes</a> to lear
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

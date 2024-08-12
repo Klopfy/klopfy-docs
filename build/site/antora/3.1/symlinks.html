@@ -6,25 +6,28 @@
     <title>Symlinks :: Personal Documentation Site</title>
     <link rel="prev" href="standard-directories.html">
     <link rel="next" href="module-directories.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -916,7 +924,7 @@ However, the result it produces is the same.</p>
 <h3 id="nix"><a class="anchor" href="#nix"></a>*nix</h3>
 <div class="paragraph">
 <p>To make a symlink on a Unix-like operating system (aka *nix), you use the <code>ln</code> command with the <code>-s</code> flag.
-Here&#8217;s an example of how to make a symlink to an adjacent file:</p>
+Here&#8217;s an example of how to make a symlink to a sibling file:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -927,7 +935,7 @@ Here&#8217;s an example of how to make a symlink to an adjacent file:</p>
 <p>In this scenario, <em class="path">link.adoc</em> is a symlink to (i.e., points to) the file <em class="path">target.adoc</em>.</p>
 </div>
 <div class="paragraph">
-<p>This also works for directories (aka folders):</p>
+<p>This also works for directories (i.e., folders):</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -972,23 +980,55 @@ The symlink acts as a directory.</p>
 <div class="sect2">
 <h3 id="windows"><a class="anchor" href="#windows"></a>Windows</h3>
 <div class="paragraph">
-<p>To make a symlink on Windows, you use the <code>mklink</code> command.
-Here&#8217;s an example of how to make a symlink to an adjacent file using <code>mklink</code>:</p>
+<p>To make a symlink on Windows, you use the <a href="https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/mklink" target="_blank" rel="noopener">mklink</a> command.
+This command can be used to create a symlink to either a file or a directory.
+(Using a symlink is preferred over a hard link or a directory junction).</p>
+</div>
+<div class="paragraph">
+<p>To create a symlink to a file, the syntax is as follows:</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ mklink target.adoc link.adoc</pre>
+<pre>mklink &lt;link&gt; &lt;target&gt;</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To create a symlink to a directory, the syntax is as follows:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>mklink /d &lt;link&gt; &lt;target&gt;</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+In Windows, the order of the link and target is reversed when compared to the *nix <code>ln</code> command.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example of how to make a symlink to a sibling file using <code>mklink</code>:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ mklink link.adoc target.adoc</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>In this scenario, <em class="path">link.adoc</em> is a symlink to (i.e., points to) the file <em class="path">target.adoc</em>.</p>
 </div>
 <div class="paragraph">
-<p>To create a symlink to a folder, you must add the <code>/d</code> parameter.</p>
+<p>Now let&#8217;s create a symlink to a sibling folder.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ mklink /d target link</pre>
+<pre>mklink /d link target</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -996,17 +1036,17 @@ Here&#8217;s an example of how to make a symlink to an adjacent file using <code
 The symlink acts as a directory.</p>
 </div>
 <div class="paragraph">
-<p>More often, you&#8217;ll want to map to a location outside of the current directory.
+<p>More often, you&#8217;ll want to link to a location outside of the current directory.
 That means including one or more directory segments in the path of the symlink target.</p>
 </div>
 <div class="paragraph">
 <p>To make a symlink to a file in a directory, first navigate to the directory where you want it to be made.
 Then, specify the target as the path relative from that directory.
-This is going to look backwards, but it will create a pointer starting at link and pointing to target.</p>
+This is going to create a pointer starting at link and pointing to target.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ mklink ..\..\path\to\target.adoc link.adoc</pre>
+<pre>$ mklink link.adoc ..\..\path\to\target.adoc</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1018,7 +1058,7 @@ The target could be in a nested directory instead of a parent directory.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ mklink /d ..\..\path\to\target link</pre>
+<pre>$ mklink /d link ..\..\path\to\target</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1126,7 +1166,7 @@ Start by switching to that directory in your terminal.</p>
 <div class="literalblock">
 <div class="title">*nix</div>
 <div class="content">
-<pre>$ ln -s MyClass.java ../../../src/main/java/org/example/MyClass.java</pre>
+<pre>$ ln -s ../../../src/main/java/org/example/MyClass.java MyClass.java</pre>
 </div>
 </div>
 <div class="literalblock">
@@ -1161,7 +1201,7 @@ Start by switching to that directory in your terminal.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>MyClass.java is a symlink to the MyClass.java file under src/main/java/org/example</td>
+<td>MyClass.java is a symlink to the MyClass.java file under src/main/java/org/example at the repository root</td>
 </tr>
 </table>
 </div>
@@ -1205,7 +1245,7 @@ Again, start by switching to the <em class="path">examples</em> directory.</p>
 <div class="literalblock">
 <div class="title">*nix</div>
 <div class="content">
-<pre>$ ln -s src ../../../src</pre>
+<pre>$ ln -s ../../../src src</pre>
 </div>
 </div>
 <div class="literalblock">
@@ -1240,7 +1280,7 @@ Again, start by switching to the <em class="path">examples</em> directory.</p>
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>src is a symlink to the src folder at the project/repository root</td>
+<td>src is a symlink to the src folder at the repository root</td>
 </tr>
 </table>
 </div>
@@ -1262,7 +1302,7 @@ Even though the symlink points to a directory, in git, it&#8217;s still treated 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">include::example$src/main/java/MyClass.java[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">include::example$src/main/java/org/example/MyClass.java[]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1319,8 +1359,10 @@ Be as surgical and precise as you can about which files you map into the Antora 
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

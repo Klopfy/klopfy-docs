@@ -13,12 +13,21 @@ content:
     branches: v3.1.x
     edit_url: false
 
+runtime:
+  cache_dir: ./.cache/antora
+
 asciidoc:
   attributes:
     experimental: ''
     idprefix: ''
     idseparator: '-'
     page-pagination: ''
+    kroki-server-url: 'https://kroki.io'
+    kroki-fetch-diagram: true
+    kroki-http-method: "post"
+  extensions:
+    - asciidoctor-kroki
+    - '@asciidoctor/tabs'
 
 ui:
   bundle:
@@ -26,4 +35,6 @@ ui:
 
 antora:
   extensions:
+    - require: '@springio/antora-extensions/asciinema-extension'
     - require: '@antora/lunr-extension'
+      languages: [en, fr]

@@ -5,26 +5,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Attachments :: Personal Documentation Site</title>
     <link rel="prev" href="include-an-example.html">
-    <link rel="next" href="../asciidoc/asciidoc.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <link rel="next" href="../asciidoc/index.html">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -884,7 +892,7 @@ The target attachment is referenced by assigning its resource ID to an xref macr
 </li>
 <li>
 <p>Attachments don&#8217;t have default reference text.
-If <a href="#link-text">link text</a> isn&#8217;t specified in the xref macro, the URL of the published attachment is displayed as the link text in the current page.</p>
+If <a href="#link-text">link text</a> isn&#8217;t specified in the xref macro, the target of the xref is displayed as the link text.</p>
 </li>
 </ul>
 </div>
@@ -1078,16 +1086,15 @@ No link text has been specified between the xref macro&#8217;s square brackets.<
 </div>
 </div>
 <div class="paragraph">
-<p>Because the xref macro in <a href="#ex-no-text">Example 9</a> isn&#8217;t assigned link text, Antora will display the URL of the attachment as the link text in the published page.</p>
+<p>Because the xref macro in <a href="#ex-no-text">Example 9</a> isn&#8217;t assigned link text, Antora will display the xref target as the link text.</p>
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>Download https://docs.example.com/component/version/module/_attachments/practice-project.zip to try it out!</pre>
+<pre>Download attachment$practice-project.zip to try it out!</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Antora uses the <a href="../how-antora-builds-urls.html" class="xref page">URL of the published attachment</a> for display purposes when you don&#8217;t specify link text.
-(Unlike pages, attachments don&#8217;t have <a href="link-content.html#default" class="xref page">default reference text</a>.)</p>
+<p>Unlike pages, attachments don&#8217;t have <a href="link-content.html#default" class="xref page">default reference text</a>, so it&#8217;s always good to specify link text to ensure a good reader experience.</p>
 </div>
 <div class="paragraph">
 <p>You can specify link text by entering it between the square brackets of the xref macro.</p>
@@ -1143,7 +1150,7 @@ If the attachment lives in the same component version and module as the page, th
 </div>
 <nav class="pagination">
   <span class="prev"><a href="include-an-example.html">Include an Example</a></span>
-  <span class="next"><a href="../asciidoc/asciidoc.html">Why AsciiDoc?</a></span>
+  <span class="next"><a href="../asciidoc/index.html">AsciiDoc Primer</a></span>
 </nav>
 </article>
   </div>
@@ -1153,8 +1160,10 @@ If the attachment lives in the same component version and module as the page, th
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

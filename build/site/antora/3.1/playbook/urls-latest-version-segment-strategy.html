@@ -6,25 +6,28 @@
     <title>Latest Version Segment Strategy :: Personal Documentation Site</title>
     <link rel="prev" href="urls-latest-prerelease-version-segment.html">
     <link rel="next" href="urls-redirect-facility.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -896,21 +904,23 @@ This example uses the symbolic version <code>next</code> for the latest prerelea
 <dl>
 <dt class="hdlist1"><code>redirect:from</code></dt>
 <dd>
-<p>Sets up redirects from the URLs using the symbolic version to the URLs using the actual version.
+<p>Sets up redirects from the URLs using the symbolic version to the URLs using the actual version, which may be empty.
 The actual version is replaced by the symbolic version specified by the <code>latest_version_segment</code> key or <code>latest_prerelease_version_segment</code> key in the latest component versions&#8217; page and asset URLs.
 This strategy is currently ignored when the redirect facility is <code>static</code>.</p>
 </dd>
 <dt class="hdlist1"><code>redirect:to</code></dt>
 <dd>
-<p>Sets up redirects from the URLs using the actual version to the URLs using the symbolic version.
+<p>Sets up redirects from the URLs using the non-emtpy actual version to the URLs using the symbolic version.
 The actual version is replaced by the symbolic version specified by the <code>latest_version_segment</code> key or <code>latest_prerelease_version_segment</code> key in the latest component versions&#8217; page and asset URLs.
+No change is made to the URL if the version is empty.
 This strategy is transparently changed to <code>replace</code> when the redirect facility is <code>static</code>.</p>
 </dd>
 <dt class="hdlist1"><code>replace</code></dt>
 <dd>
 <p><em>Default</em>.
-The actual version is replaced by the symbolic version specified by the <code>latest_version_segment</code> key or <code>latest_prerelease_version_segment</code> key in the latest component versions&#8217; page and asset URLs.
-<code>replace</code> is the default value when the <code>latest_version_segment_strategy</code> key isn&#8217;t set, but the <code>latest_version_segment</code> key or <code>latest_prerelease_version_segment</code> key is assigned a value in the playbook.</p>
+The non-empty actual version is replaced by the symbolic version specified by the <code>latest_version_segment</code> key or <code>latest_prerelease_version_segment</code> key in the latest component versions&#8217; page and asset URLs.
+<code>replace</code> is the default value when the <code>latest_version_segment_strategy</code> key isn&#8217;t set, but the <code>latest_version_segment</code> key or <code>latest_prerelease_version_segment</code> key is assigned a value in the playbook.
+No change is made to the URL if the version is empty.</p>
 </dd>
 </dl>
 </div>
@@ -922,7 +932,8 @@ Since creating temporary redirect rules is only something a web server can do, w
 </div>
 <div class="paragraph">
 <p>If the value of <code>latest_version_segment_strategy</code> key is <code>redirect:from</code>, the value of the <code>latest_version_segment</code> and <code>latest_prerelease_version_segment</code> <strong>cannot</strong> be empty.
-This restriction is due to the fact that redirecting from the parent folder could prevent access to other versions.</p>
+This restriction is due to the fact that redirecting from the parent folder could prevent access to other versions.
+For the same reason, the <code>redirect:to</code> and <code>replace</code> strategies have no affect if the actual version is empty.</p>
 </div>
 </div>
 </div>
@@ -1053,7 +1064,7 @@ Antora determines the latest component version and order of versions based on it
 <div class="paragraph">
 <p>In addition to replacing the actual version with the symbolic version in the URLs of the latest component versions, Antora creates temporary redirects from the URLs using the actual version to the URLs using the symbolic version.
 The playbook in <a href="#ex-playbook">Example 5</a> assigns the <a href="urls-redirect-facility.html#nginx" class="xref page">nginx value</a> to the <code>redirect_facility</code> key, therefore Antora writes the redirect rules to an nginx rewrite configuration file named <em class="path">rewrite.conf</em> and places it in the site at <em class="path">.etc/nginx/rewrite.conf</em>.
-Any request for a URL using the actual version of a latest component version is redirected to the URL with the symbolic version.
+Any request for a URL using the actual version of a latest component version, as long as the version is not empty, is redirected to the URL with the symbolic version.
 For example, if the URL <em>https://docs.example.com/colorado/5.6/get-started/tour.html</em> is requested, the URL redirects to <em>https://docs.example.com/colorado/current/get-started/tour.html</em>.</p>
 </div>
 <div class="sect2">
@@ -1124,8 +1135,10 @@ For example, if the URL <em>https://docs.example.com/colorado/6.0/get-started/to
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

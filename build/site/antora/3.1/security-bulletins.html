@@ -6,25 +6,28 @@
     <title>Security Bulletins :: Personal Documentation Site</title>
     <link rel="prev" href="project/get-help.html">
     <link rel="next" href="project/release-schedule.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -850,25 +858,14 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="CVE-2020-28469"><a class="anchor" href="#CVE-2020-28469"></a>Security Bulletin CVE-2020-28469</h2>
+<h2 id="inflight-and-glob-deprecation-notice"><a class="anchor" href="#inflight-and-glob-deprecation-notice"></a>inflight and glob deprecation notice</h2>
 <div class="sectionbody">
-<div class="dlist">
-<dl>
-<dt class="hdlist1">ID</dt>
-<dd>
-<p>CVE-2020-28469</p>
-</dd>
-<dt class="hdlist1">Published</dt>
-<dd>
-<p>Jun 7, 2021</p>
-</dd>
-</dl>
-</div>
 <div class="sect2">
 <h3 id="summary"><a class="anchor" href="#summary"></a>Summary</h3>
 <div class="paragraph">
-<p>There&#8217;s a known security vulnerability in the version of glob-parent that this project pulls in as a transitive dependency of vinyl-fs (by way of glob-stream).
-We&#8217;re aware of this problem and are planning to eliminate it from the dependency chain as soon as we are able to.</p>
+<p>Asciidoctor.js depends on asciidoctor-opal-runtime, which depends on a deprecated version of the glob package.
+The glob package, in turn, depends on the deprecated inflight package.
+We&#8217;re aware of this problem and are planning to eliminate glob from the dependency chain as soon as we&#8217;re able to.</p>
 </div>
 </div>
 <div class="sect2">
@@ -880,33 +877,27 @@ We&#8217;re aware of this problem and are planning to eliminate it from the depe
 <div class="sect2">
 <h3 id="remediation-plan"><a class="anchor" href="#remediation-plan"></a>Remediation plan</h3>
 <div class="paragraph">
-<p>The maintainer of vinyl-fs refuses to address the problem, so we will be removing vinyl-fs from Antora entirely.
-However, this is not a trivial change and will require time to address.
-We plan to remove it completely in a later release in the 3.x release line.</p>
-</div>
-<div class="paragraph">
-<p>In the meantime, you can explicitly upgrade this dependency in your dependency chain, thus eliminating the warning emitted by npm, by adding the following override to your <em class="path">package.json</em> file.</p>
+<p>You can explicitly upgrade the glob dependency in your dependency chain, thus eliminating the warning emitted by npm, by adding the following override to your <em class="path">package.json</em> file:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"overrides": {
-  "vinyl-fs": {
-    "glob-stream": "~7.0"
+  "asciidoctor-opal-runtime": {
+    "glob": "~10.4"
   }
 }</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>This remediation is used in the <a href="https://gitlab.com/antora/docs.antora.org/-/blob/main/netlify/package.json">build for this site</a>.
-You can learn more about npm overrides in the <a href="https://docs.npmjs.com/cli/v8/configuring-npm/package-json#overrides">package.json documentation</a>.
 Unfortunately, npm overrides can only be used by the consumer of a library, not the library itself.
-Thus, this is not a remdiation solution Antora itself can enact.</p>
+Thus, this is not a remediation solution Antora itself can enact.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="assessment"><a class="anchor" href="#assessment"></a>Assessment</h3>
 <div class="paragraph">
-<p>Fortunately, Antora uses glob-parent in a controlled way, so this vulnerability is not an attack vector for Antora.
+<p>Fortunately, Antora never uses the glob library that Asciidoctor.js depends on, so this deprecation is irrelevant.
 However, we recognize that the notice is annoying and may trigger security protocols for users who see it.</p>
 </div>
 </div>
@@ -915,10 +906,7 @@ However, we recognize that the notice is annoying and may trigger security proto
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://nvd.nist.gov/vuln/detail/CVE-2020-28469">CVE-2020-28469</a></p>
-</li>
-<li>
-<p><a href="https://github.com/advisories/GHSA-ww39-953v-wcq6">GHSA-ww39-953v-wcq6</a></p>
+<p><a href="https://docs.npmjs.com/cli/v8/configuring-npm/package-json#overrides">package.json overrides</a></p>
 </li>
 </ul>
 </div>
@@ -937,8 +925,10 @@ However, we recognize that the notice is annoying and may trigger security proto
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

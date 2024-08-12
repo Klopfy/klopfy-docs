@@ -5,26 +5,29 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Git Fetch Concurrency Limit :: Personal Documentation Site</title>
     <link rel="prev" href="git-suffix.html">
-    <link rel="next" href="git-credentials-path-and-contents.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <link rel="next" href="git-read-concurrency.html">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -851,17 +859,8 @@
 This covers both the <code>fetch</code> and <code>clone</code> operations (since <code>clone</code> first does a <code>fetch</code>).
 When the number of concurrent operations reaches this limit, Antora will wait for an active operation to complete before adding another one to queue.</p>
 </div>
-<div class="admonitionblock note">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-note" title="Note"></i>
-</td>
-<td class="content">
-This setting does not limit the number of repositories that are scanned concurrently.
-</td>
-</tr>
-</table>
+<div class="paragraph">
+<p>See the <a href="git-read-concurrency.html" class="xref page">Git Read Concurrency Limit</a> to learn how to control how many repositories Antora reads from at once.</p>
 </div>
 </div>
 </div>
@@ -869,15 +868,15 @@ This setting does not limit the number of repositories that are scanned concurre
 <h2 id="default-fetch-concurrency"><a class="anchor" href="#default-fetch-concurrency"></a>Default fetch concurrency</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>By default, Antora does not limit the fetch concurrency, represented by the default value <code>0</code>.
-That means when you run Antora, it will attempt to fetch from all remote repositories it intends to fetch from at once.</p>
+<p>By default, Antora limits the fetch concurrency to 1, which means it will only fetch from one repository at a time.
+If you want to allow Antora to fetch all the repositories at once, you can change this value to <code>0</code>.</p>
 </div>
 <div class="paragraph">
 <p>Fetching a lot of repositories at once can put a heavy burden on the network.
 Additionally, some git hosting services place a quota on concurrent requests, especially anonymous onces (called rate limiting).
 That may lead to the git client being throttled (or even barred) by the git server.
 In the worst case, the server may hang up on the network connection, which will cause Antora to fail.
-To alleviate this situation, Antora allows you to control the fetch concurrency limit.</p>
+To alleviate this situation, Antora allows you to tune the fetch concurrency limit.</p>
 </div>
 </div>
 </div>
@@ -886,7 +885,7 @@ To alleviate this situation, Antora allows you to control the fetch concurrency 
 <div class="sectionbody">
 <div class="paragraph">
 <p>The optional <code>fetch_concurrency</code> key is set under the <a href="configure-git.html" class="xref page">git category</a> in the playbook.
-This key accepts a positive integer value.</p>
+This key accepts a positive integer value or <code>0</code> for no limit.</p>
 </div>
 <div class="listingblock">
 <div class="title">Example 1. antora-playbook.yml</div>
@@ -897,12 +896,13 @@ This key accepts a positive integer value.</p>
 </div>
 <div class="paragraph">
 <p>The purpose of the <code>fetch_concurrency</code> key is to allow you to control (i.e., limit) how many network connections are being made at once by the content aggregator, thus circumventing the problem of rate limiting enforced by the git host.
-In extreme circumstances, you&#8217;re advised to set this value to <code>1</code>.</p>
+If the git server is extremely aggressive with resetting paused connections, such as the case with GitHub, you&#8217;re advised to set this value to <code>1</code>.</p>
 </div>
 <div class="paragraph">
-<p>You may also find that by limiting the number of concurrent operations, it reduces the time it takes the fetch operations to complete.
+<p>You may find that by limiting the number of concurrent operations, it reduces the time it takes the fetch operations to complete.
 Presumably, this is because the git server does not throttle the requests.
-However, fetching repositories in serial could also increase the amount of time it takes to fetch the repositories in total.</p>
+However, fetching repositories in serial could also increase the amount of time it takes to fetch the repositories in total.
+You will need to experiment with this value to find the setting that works best for your site.</p>
 </div>
 <div class="paragraph">
 <p>For interactive terminals, limiting the fetch concurrency also limits the number of progress bars that appear at once in the terminal.</p>
@@ -914,9 +914,10 @@ However, fetching repositories in serial could also increase the amount of time 
 <div class="sectionbody">
 <div class="paragraph">
 <p>Once a repository is fetched, or if a fetch is not required, Antora puts the repository into a pool to be scanned.
-Antora never places a limit on how many repositories are scanned concurrently.
-The limit is only applied to the fetch step.
-Thus, the <code>fetch_concurrency</code> setting will not have any effect on the content aggreator&#8217;s behavior unless it&#8217;s fetching content from remote repositories.</p>
+By default, Antora does not place a limit on how many repositories are scanned concurrently.
+You can control this behavior using the <a href="git-read-concurrency.html" class="xref page">Git Read Concurrency Limit</a> key.
+Antora only starts reading from repositories once all fetch (or clone) operations are complete.
+The limit is only applied to the fetch step.</p>
 </div>
 <div class="paragraph">
 <p>Antora fetches content from a remote repository if it has not previously cloned the repository or the <a href="runtime-fetch.html" class="xref page">runtime.fetch key</a> is set.</p>
@@ -925,7 +926,7 @@ Thus, the <code>fetch_concurrency</code> setting will not have any effect on the
 </div>
 <nav class="pagination">
   <span class="prev"><a href="git-suffix.html">Git Repository URL Suffix</a></span>
-  <span class="next"><a href="git-credentials-path-and-contents.html">Git Credentials Path and Contents</a></span>
+  <span class="next"><a href="git-read-concurrency.html">Git Read Concurrency Limit</a></span>
 </nav>
 </article>
   </div>
@@ -935,8 +936,10 @@ Thus, the <code>fetch_concurrency</code> setting will not have any effect on the
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

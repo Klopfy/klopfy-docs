@@ -6,25 +6,28 @@
     <title>Create Page Links :: Personal Documentation Site</title>
     <link rel="prev" href="xref.html">
     <link rel="next" href="link-content.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -861,7 +869,7 @@
 <p><i class="fa fa-check-square-o"></i> The target page is <a href="#relative-path">stored in a subdirectory of the <em>pages</em> directory</a></p>
 </li>
 <li>
-<p><i class="fa fa-check-square-o"></i> The target page and current page are <a href="#token">stored in the same subdirectory of the <em>pages</em> directory</a></p>
+<p><i class="fa fa-check-square-o"></i> The target page and current page are <a href="#relative-path-token">stored in the same subdirectory of the <em>pages</em> directory</a></p>
 </li>
 <li>
 <p><i class="fa fa-check-square-o"></i> The target page and current page <a href="#modules">belong to different modules</a></p>
@@ -1065,14 +1073,14 @@ The file coordinate of the target page is always calculated from the root of the
 <div class="paragraph">
 <p>Only the file coordinate of the target page needs to be specified in the xref macro because both pages belong to the <em>ROOT</em> module and the <em>colorado 5.2</em> component version.
 The file coordinate for <em class="path">ranges.adoc</em> is <code>ranges.adoc</code> because it&#8217;s stored at the root of the <em class="path">pages</em> directory.
-See <a href="#relative-path">File coordinate with pages-relative directory path</a> and <a href="#token">File coordinate with relative path token</a> for file coordinate examples when the target page is stored in a subdirectory <em class="path">pages</em> directory.</p>
+See <a href="#relative-path">File coordinate with pages-relative directory path</a> and <a href="#relative-path-token">File coordinate with relative path token</a> for file coordinate examples when the target page is stored in a subdirectory <em class="path">pages</em> directory.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="relative-path"><a class="anchor" href="#relative-path"></a>File coordinate with pages-relative directory path</h3>
 <div class="paragraph">
 <p>The <em>pages</em>-relative directory path of the <a href="#target">target page</a> is required in its file coordinate when the <a href="#current">current page</a> isn&#8217;t stored in the same subdirectory as the target page.
-If both pages are stored in the same subdirectory, see <a href="#token">File coordinate with relative path token</a>.</p>
+If both pages are stored in the same subdirectory, see <a href="#relative-path-token">File coordinate with relative path token</a>.</p>
 </div>
 <div id="ex-subdir-base" class="listingblock">
 <div class="title">Example 7. File coordinate when the target page is stored in a subdirectory of a pages directory</div>
@@ -1134,11 +1142,11 @@ In cases where the current page and target page are stored in the same subdirect
 </div>
 </div>
 <div class="sect2">
-<h3 id="token"><a class="anchor" href="#token"></a>File coordinate with relative path token</h3>
+<h3 id="relative-path-token"><a class="anchor" href="#relative-path-token"></a>File coordinate with relative path token</h3>
 <div class="paragraph">
 <p>If the <a href="#target">target page</a> and <a href="#current">current page</a> are stored in the same subdirectory in the <em class="path">pages</em> directory, the <em>pages</em>-relative directory path of the target page&#8217;s file coordinate can be replaced with the relative path token, <code>./</code>.</p>
 </div>
-<div id="ex-token-base" class="listingblock">
+<div id="ex-relative-path-token" class="listingblock">
 <div class="title">Example 10. File coordinate when the target page and current page are stored in the same subdirectory</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">xref:./target-page-filename.adoc[optional link text]</code></pre>
@@ -1146,9 +1154,9 @@ In cases where the current page and target page are stored in the same subdirect
 </div>
 <div class="paragraph">
 <p>Let&#8217;s reference <em class="path">faq.adoc</em> from <em class="path">signs.adoc</em>.
-<a href="#ex-co-token">Example 11</a> shows that both files are stored in the <em class="path">terms</em> subdirectory of the <em class="path">pages</em> directory, and that both files belong to the same module and component version.</p>
+<a href="#ex-co-relative-path-token">Example 11</a> shows that both files are stored in the <em class="path">terms</em> subdirectory of the <em class="path">pages</em> directory, and that both files belong to the same module and component version.</p>
 </div>
-<div id="ex-co-token" class="listingblock">
+<div id="ex-co-relative-path-token" class="listingblock">
 <div class="title">Example 11. Directories and files assigned to colorado 5.2</div>
 <div class="content">
 <pre>📄 antora.yml
@@ -1179,16 +1187,16 @@ In cases where the current page and target page are stored in the same subdirect
 </div>
 <div class="paragraph">
 <p>When the target page and current page are stored in the same subdirectory in the <em class="path">pages</em> directory, the relative path token, <code>./</code>, can be used to abbreviate the target page&#8217;s file coordinate.
-The xref macro in <a href="#ex-token">Example 12</a> links to the <em class="path">faq.adoc</em> page (target page) from the <em class="path">signs.adoc</em> page (current page).</p>
+The xref macro in <a href="#ex-relative-path-token">Example 10</a> links to the <em class="path">faq.adoc</em> page (target page) from the <em class="path">signs.adoc</em> page (current page).</p>
 </div>
-<div id="ex-token" class="listingblock">
+<div id="ex-relative-path-token-subdir" class="listingblock">
 <div class="title">Example 12. signs.adoc (current page)</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">See the xref:./faq.adoc[].</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As shown in <a href="#ex-token">Example 12</a>, the file coordinate for <em class="path">faq.adoc</em>, when referenced from <em class="path">signs.adoc</em>, is <code>./faq.adoc</code>.
+<p>As shown in <a href="#ex-relative-path-token-subdir">Example 12</a>, the file coordinate for <em class="path">faq.adoc</em>, when referenced from <em class="path">signs.adoc</em>, is <code>./faq.adoc</code>.
 Both pages are stored in the <em class="path">terms</em> subdirectory, therefore, the <em>pages</em>-relative directory path of the target page&#8217;s file coordinate is replaced with the <code>./</code> token.</p>
 </div>
 </div>
@@ -1596,8 +1604,10 @@ In <a href="#ex-across-versions">Example 29</a>, the resource ID assigned to the
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

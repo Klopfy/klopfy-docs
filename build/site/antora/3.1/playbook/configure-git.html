@@ -6,25 +6,28 @@
     <title>Git Keys :: Personal Documentation Site</title>
     <link rel="prev" href="content-refname-matching.html">
     <link rel="next" href="git-suffix.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -860,12 +868,13 @@
 <div class="title">Example 1. antora-playbook.yml</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">git: <i class="conum" data-value="1"></i><b>(1)</b>
-  fetch_concurrency: 5 <i class="conum" data-value="2"></i><b>(2)</b>
+  fetch_concurrency: 3 <i class="conum" data-value="2"></i><b>(2)</b>
   ensure_git_suffix: false <i class="conum" data-value="3"></i><b>(3)</b>
   credentials: <i class="conum" data-value="4"></i><b>(4)</b>
     path: ./.git-credentials <i class="conum" data-value="5"></i><b>(5)</b>
   plugins: <i class="conum" data-value="6"></i><b>(6)</b>
-    credential_manager: ./system-git-credential-manager.js <i class="conum" data-value="7"></i><b>(7)</b></code></pre>
+    credential_manager: ./system-git-credential-manager.js <i class="conum" data-value="7"></i><b>(7)</b>
+  read_concurrency: 5 <i class="conum" data-value="8"></i><b>(8)</b></code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -876,7 +885,7 @@
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>Optional <code>fetch_concurrency</code> key to limit number of concurrency fetch operations</td>
+<td>Optional <code>fetch_concurrency</code> key to limit number of concurrent fetch operations</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
@@ -897,6 +906,10 @@
 <tr>
 <td><i class="conum" data-value="7"></i><b>7</b></td>
 <td>Optional <code>credential_manager</code> key</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="8"></i><b>8</b></td>
+<td>Optional <code>read_concurrency</code> key to limit number of concurrent read operations (after repositories are fetched)</td>
 </tr>
 </table>
 </div>
@@ -935,15 +948,10 @@ When the <code>git</code> key isn&#8217;t present in the playbook, Antora falls 
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="git-fetch-concurrency.html" class="xref page">fetch_concurrency</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0</code> by default (effectively no limit).
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>1</code> by default.
 Accepts any positive integer or zero.
-When non-zero, limits the number of concurrent fetch operations to the specified value.</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="git-suffix.html" class="xref page">ensure_git_suffix</a></p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> by default.
-When <code>true</code>, this key instructs the git client to automatically append <em class="path">.git</em> to content sources repository URLs if absent.</p></td>
+When non-zero, limits the number of concurrent fetch operations to the specified value.
+When zero, does not limit the number of concurrent fetch operations.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 </tr>
 <tr>
@@ -954,6 +962,20 @@ When <code>true</code>, this key instructs the git client to automatically appen
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><a href="git-plugins.html#http" class="xref page">plugins.http</a></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">Accepts a require request that specifies the location of the code that provides a custom HTTP request handler.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="git-suffix.html" class="xref page">ensure_git_suffix</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>true</code> by default.
+When <code>true</code>, this key instructs the git client to automatically append <em class="path">.git</em> to content sources repository URLs if absent.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="git-read-concurrency.html" class="xref page">read_concurrency</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>0</code> by default (effectively no limit).
+Accepts any positive integer or zero.
+When non-zero, limits the number of read operations to the specified value.
+When zero, does not limit the number of read operations.</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">No</p></td>
 </tr>
 </tbody>
@@ -972,8 +994,10 @@ When <code>true</code>, this key instructs the git client to automatically appen
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

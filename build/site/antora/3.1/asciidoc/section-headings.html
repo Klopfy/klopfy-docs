@@ -4,27 +4,30 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Section Headings :: Personal Documentation Site</title>
-    <link rel="prev" href="asciidoc.html">
+    <link rel="prev" href="document-header.html">
     <link rel="next" href="text-and-punctuation.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="document-header.html">Document Header</a>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -832,7 +840,7 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="../index.html">Antora</a></li>
-    <li>AsciiDoc Primer</li>
+    <li><a href="index.html">AsciiDoc Primer</a></li>
     <li><a href="section-headings.html">Sections</a></li>
   </ul>
 </nav>
@@ -858,7 +866,7 @@
 </div>
 </div>
 <div class="sect1">
-<h2 id="heading-level-syntax"><a class="anchor" href="#heading-level-syntax"></a>Heading level syntax</h2>
+<h2 id="heading-level-syntax"><a class="anchor" href="#heading-level-syntax"></a>Heading syntax and levels</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>Sections partition a page into a content hierarchy.
@@ -885,9 +893,20 @@ In AsciiDoc, sections are defined using section titles.</p>
 For example, a level 1 section (<code>==</code>) maps to an <code>&lt;h2&gt;</code> HTML tag.</p>
 </div>
 <div class="paragraph">
-<p>Section headings must be defined using the Atx-style (single line) that begins with one or more equals signs.
-Antora does not recognize the legacy Setext-style (two line) syntax once supported by AsciiDoc.
-If you use the Setext-style syntax, xrefs in the page will not be resolved and other features of AsciiDoc will not be available.</p>
+<p>Section headings must be defined using the Atx-style (single line) that begins with one or more equals signs.</p>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+Antora does not recognize the legacy Setext-style (i.e., underlined) heading syntax once supported in AsciiDoc, nor does it recognize Asciidoctor&#8217;s Markdown-style heading syntax.
+If you don&#8217;t use the Atx-style syntax, xrefs in the page will not be resolved and other features of AsciiDoc will not be available.
+</td>
+</tr>
+</table>
 </div>
 <div class="ulist">
 <div class="title"><strong>AsciiDoc and Asciidoctor resources</strong></div>
@@ -900,7 +919,7 @@ If you use the Setext-style syntax, xrefs in the page will not be resolved and o
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="asciidoc.html">Why AsciiDoc?</a></span>
+  <span class="prev"><a href="document-header.html">Document Header</a></span>
   <span class="next"><a href="text-and-punctuation.html">Text and Punctuation Styles</a></span>
 </nav>
 </article>
@@ -911,8 +930,10 @@ If you use the Setext-style syntax, xrefs in the page will not be resolved and o
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

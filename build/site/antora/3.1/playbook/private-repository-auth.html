@@ -6,25 +6,28 @@
     <title>Private Repository Authentication :: Personal Documentation Site</title>
     <link rel="prev" href="content-source-url.html">
     <link rel="next" href="content-branches.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -848,9 +856,9 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>In order for Antora to access private repositories, you need to supply it with authentication credentials for any private repository URL you want to use.
+<p>In order for Antora to access private repositories, you must supply it with authentication credentials for any private repository URL you use in your playbook.
 These credentials can be externalized so they don&#8217;t have to be hard-coded into the playbook.
-This page covers various ways you can pass the credentials to Antora, including the built-in git credential store, a custom credential store, or even your own credential manager.</p>
+This page covers various ways you can pass the credentials to Antora, including the built-in git credential store, a custom credential store, and even your own credential manager.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s start by looking at the authentication credential types Antora accepts by default, then move on to how to set them up and put them to use.</p>
@@ -897,14 +905,39 @@ You&#8217;ll receive the error <em>401 HTTP Basic: Access Denied</em> when you t
 <div class="paragraph">
 <p>You typically use a single personal access token on your own machine and one or more deploy tokens on a CI server.</p>
 </div>
+<div class="sect2">
+<h3 id="github"><a class="anchor" href="#github"></a>GitHub</h3>
 <div class="paragraph">
-<p>To create an access token for <strong>GitHub</strong>, see <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token" target="_blank" rel="noopener">Creating a personal access token for the command line</a>.
-GitHub does not support deploy tokens at this time.
-To create an access token for <strong>GitLab</strong>, see <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html" target="_blank" rel="noopener">Personal Access Tokens</a> and <a href="https://docs.gitlab.com/ee/user/project/deploy_tokens/" target="_blank" rel="noopener">Deploy Tokens</a>.
-For <strong>Bitbucket</strong>, you&#8217;ll need to create an <a href="https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/" target="_blank" rel="noopener">app password</a> with read access to repositories.</p>
+<p>To create an access token for <strong>GitHub</strong>, see <a href="https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token" target="_blank" rel="noopener">Creating a personal access token (PAT) for the command line</a>.
+GitHub has two types of access tokens, fine-grained and classic.
+Both are supported by Antora, though the fine-grained token must be granted the Contents permission to the repositories you want to use.</p>
 </div>
 <div class="paragraph">
-<p>Next, let&#8217;s see how to supply these credentials to Antora&#8217;s built-in credential manager via the default git credential store.</p>
+<p>GitHub also supports <a href="https://docs.github.com/en/apps/creating-github-apps/authenticating-with-a-github-app/generating-an-installation-access-token-for-a-github-app" target="_blank" rel="noopener">Installation Access Tokens (IAT)</a>, which are bound to an application instead of user.
+These access tokens are more suitable for use in an organization.</p>
+</div>
+<div class="paragraph">
+<p>GitHub does not support deploy tokens at this time.</p>
+</div>
+<div class="paragraph">
+<p>To learn more about how to create access tokens for use with GitHub, refer to the articles <a href="https://rmoff.net/2023/12/19/deploying-antora-with-github-actions-and-a-private-github-repo/" target="_blank" rel="noopener">Antora with GitHub PAT</a> and <a href="https://rmoff.net/2024/01/17/antora-deployment-to-cloudflare-across-private-repositories-with-github-actions/" target="_blank" rel="noopener">Antora with GitHub IAT</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="gitlab"><a class="anchor" href="#gitlab"></a>GitLab</h3>
+<div class="paragraph">
+<p>To create an access token for <strong>GitLab</strong>, see <a href="https://docs.gitlab.com/ee/user/profile/personal_access_tokens.html" target="_blank" rel="noopener">Personal Access Tokens</a> and <a href="https://docs.gitlab.com/ee/user/project/deploy_tokens/" target="_blank" rel="noopener">Deploy Tokens</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="bitbucket"><a class="anchor" href="#bitbucket"></a>Bitbucket</h3>
+<div class="paragraph">
+<p>For <strong>Bitbucket</strong>, you&#8217;ll need to create an <a href="https://support.atlassian.com/bitbucket-cloud/docs/app-passwords/" target="_blank" rel="noopener">app password</a> with read access to repositories.
+An app password is a user-based access token.</p>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s see how to supply these credentials to Antora&#8217;s built-in credential manager via the default git credential store.</p>
+</div>
 </div>
 </div>
 </div>
@@ -913,7 +946,8 @@ For <strong>Bitbucket</strong>, you&#8217;ll need to create an <a href="https://
 <div class="sectionbody">
 <div class="paragraph">
 <p>By default, Antora&#8217;s built-in credential manager automatically checks for credentials in the <a href="https://git-scm.com/docs/git-credential-store" target="_blank" rel="noopener">git credential store</a> (a database file).
-The default path for the git credential store is <em>$HOME/.git-credentials</em>, or <em>$XDG_CONFIG_HOME/git/credentials</em> if the previous location doesn&#8217;t exist.</p>
+The default path for the git credential store is <em>$HOME/.git-credentials</em>, or <em>$XDG_CONFIG_HOME/git/credentials</em> if the first location doesn&#8217;t exist.
+Note that this path is a <strong>file</strong>, not a directory.</p>
 </div>
 <div class="paragraph">
 <p>Since Antora consults the credential manager automatically when credentials are requested by the git host (aka on demand), you don&#8217;t have to specify credentials directly in your playbook.
@@ -928,7 +962,8 @@ Here&#8217;s how a private content source in your playbook might look:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When Antora is notified by the git host that a URL requires authentication, it will look for an entry in the credentials store that has a matching context.
+<p>When Antora is notified by the git host that a URL requires authentication, it will look for a matching entry in the credentials store.
+Antora looks for a match using the URL as the key.
 If a protocol (e.g., <code>https</code>) and hostname (and, optionally, the repository path) are found in the credentials store, those credentials are returned to Antora&#8217;s credential manager and passed on to the git server.</p>
 </div>
 <div class="paragraph">
@@ -983,9 +1018,8 @@ Next, in your terminal, run the following command for each private repository yo
 </div>
 <div class="literalblock">
 <div class="content">
-<pre>$ git config --global credential.helper store &amp;&amp; \
-  echo -n 'Repository URL: ' &amp;&amp; read REPLY &amp;&amp; \
-  git ls-remote -h $REPLY &gt; /dev/null</pre>
+<pre>$ echo -n 'Repository URL: ' &amp;&amp; read REPLY &amp;&amp; \
+  git -c credential.helper=store ls-remote -h $REPLY &gt; /dev/null</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -993,9 +1027,6 @@ Next, in your terminal, run the following command for each private repository yo
 </div>
 <div class="olist arabic">
 <ol class="arabic">
-<li>
-<p>Enables the git credential store globally (temporarily).</p>
-</li>
 <li>
 <p>Prompts you for the URL of a private repository.</p>
 </li>
@@ -1015,30 +1046,12 @@ If you aren&#8217;t prompted for your credentials, it means your credentials are
 </div>
 </li>
 <li>
-<p>Stores the credentials in <em class="path">$HOME/.git-credentials</em> (and assigning it the appropriate permissions).</p>
+<p>Stores the credentials in the <em class="path">$HOME/.git-credentials</em> file (and assigns it the appropriate permissions).</p>
 </li>
 </ol>
 </div>
 <div class="paragraph">
 <p>If this script succeeds, you can use the applicable private repositories in Antora without any further configuration.</p>
-</div>
-<div class="sidebarblock">
-<div class="content">
-<div class="title">Restore your git configuration</div>
-<div class="paragraph">
-<p>The interactive script above altered your git settings in order to enable the credential store globally.
-If you aren&#8217;t using the credential store outside of Antora, run the following command to disable it again:</p>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>$ git config --global --remove-section credential</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Changing this setting does not affect how Antora uses the credential store.
-It only affects the behavior of your native git client.</p>
-</div>
-</div>
 </div>
 <div class="paragraph">
 <p>If the interactive approach didn&#8217;t work for you, you can populate the credential store directly.
@@ -1048,7 +1061,7 @@ Let&#8217;s give that a shot.</p>
 <div class="sect2">
 <h3 id="populate-credentials-directly"><a class="anchor" href="#populate-credentials-directly"></a>Populate the credential store directly</h3>
 <div class="paragraph">
-<p>To add credentials to the git credential store directly, create the file <em class="path">$HOME/.git-credentials</em> and open it in your editor.
+<p>To add credentials to the git credential store directly, create the file (not directory) <em class="path">$HOME/.git-credentials</em> and open it in your editor.
 Put each unique set of credentials (i.e., username/password pair or access token plus hostname and optional repository path) on its own line.
 If you&#8217;re using a single git host and a personal access token, you only need one entry.
 If you&#8217;re using multiple git hosts or multiple deploy tokens, you&#8217;ll need more than one entry.</p>
@@ -1070,7 +1083,7 @@ If you&#8217;re using multiple git hosts or multiple deploy tokens, you&#8217;ll
 </div>
 </div>
 <div class="paragraph">
-<p>To use different credentials for a given repository, you can append a repository path (i.e., <code>&lt;repo&gt;</code>) to the entry to make the matching more strict.
+<p>To use different credentials for a given repository on the same git host, you can append a repository path (i.e., <code>&lt;repo&gt;</code>) to the entry to make the matching more strict.
 (The <code>.git</code> file extension in the repository path is optional).</p>
 </div>
 <div class="listingblock">
@@ -1079,7 +1092,7 @@ If you&#8217;re using multiple git hosts or multiple deploy tokens, you&#8217;ll
 </div>
 </div>
 <div class="paragraph">
-<p>Here&#8217;s an example for a specific repository path:</p>
+<p>Here&#8217;s an example of an entry for a specific repository path:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1105,8 +1118,8 @@ https://<strong>USERNAME</strong>:<strong>APP_PASSWORD</strong>@bitbucket.org/or
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Specifying the repository path is optional.
-If you don&#8217;t include it, the credential will be used for all URLs that share the same git host.
+Specifying the repository path in the URL is optional.
+If you don&#8217;t include it, that credential pair will be used for all URLs that share the same git host.
 </td>
 </tr>
 </table>
@@ -1152,7 +1165,7 @@ If you&#8217;re using a Bitbucket app password, notice you must include your own
 <h2 id="custom-credential-path"><a class="anchor" href="#custom-credential-path"></a>Specify a custom git credential store path</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Instead of using the credential store at the default path(s), you can instruct Antora to look for the file in a different location using either the <code>--git-credentials-path</code> CLI option or <code>GIT_CREDENTIALS_PATH</code> environment variable.</p>
+<p>Instead of using the credential store at the default path(s), you can instruct Antora to look for the file in a different location using either the <code>--git-credentials-path</code> CLI option or <code>GIT_CREDENTIALS_PATH</code> environment variable, both of which set the <code>git.credentials.path</code> playbook key at runtime.</p>
 </div>
 <div class="paragraph">
 <p>Here&#8217;s an example that uses the CLI option to specify a path relative to the playbook file:</p>
@@ -1163,7 +1176,7 @@ If you&#8217;re using a Bitbucket app password, notice you must include your own
 </div>
 </div>
 <div class="paragraph">
-<p>You can also specify this location directly in your playbook using the <a href="git-credentials-path-and-contents.html#path-key" class="xref page">credentials.path key</a> under the <a href="configure-git.html" class="xref page">git key</a>.</p>
+<p>To learn more about how to use the <code>git.credentials.path</code> playbook key, including how to set it directly in the playbook, consult the reference for the <a href="git-credentials-path-and-contents.html#path-key" class="xref page">git.credentials.path key</a>.</p>
 </div>
 </div>
 </div>
@@ -1171,8 +1184,10 @@ If you&#8217;re using a Bitbucket app password, notice you must include your own
 <h2 id="git-credentials-environment-variable"><a class="anchor" href="#git-credentials-environment-variable"></a>Pass credentials via an environment variable</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Instead of reading the credentials from a file, you can have Antora read the credentials directly from the environment variable named <code>GIT_CREDENTIALS</code>.
-Here&#8217;s an example that demonstrates the concept:</p>
+<p>Instead of reading the credentials from a file, you can have Antora read the credentials directly from the environment variable named <code>GIT_CREDENTIALS</code>, which sets the <code>git.credentials.contents</code> playbook key at runtime.</p>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s an example that demonstrates the concept:</p>
 </div>
 <div class="literalblock">
 <div class="content">
@@ -1211,6 +1226,9 @@ For example:</p>
 </div>
 <div class="paragraph">
 <p>Exporting the environment variable saves you from having to type it each time you run Antora.</p>
+</div>
+<div class="paragraph">
+<p>To learn more about how to use the <code>git.credentials.contents</code> playbook key, including how to set it directly in the playbook, consult the reference for the <a href="git-credentials-path-and-contents.html#contents-key" class="xref page">git.credentials.contents key</a>.</p>
 </div>
 </div>
 </div>
@@ -1527,8 +1545,10 @@ If, for some reason, this automatic translation doesn&#8217;t work, you&#8217;ll
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

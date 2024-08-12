@@ -7,25 +7,28 @@
     <link rel="prev" href="index.html">
     <link rel="next" href="asciidoctor-upgrade-notes.html">
     <meta name="description" content="The new features, changes, and bug fixes included in Antora 3.1 and its patch releases.">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -50,12 +53,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -329,10 +334,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -529,6 +534,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -803,7 +811,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -811,7 +819,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -844,20 +852,377 @@
 <article class="doc">
 <h1 class="page">What&#8217;s New in Antora 3.1</h1>
 <div class="sect1">
+<h2 id="antora-3-1-9"><a class="anchor" href="#antora-3-1-9"></a>Antora 3.1.9</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em><strong>Release date:</strong> 2024.07.05 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.9" target="_blank" rel="noopener">3.1.9</a></em></p>
+</div>
+<div class="paragraph">
+<p>The focus of this release is to fix changes from the previous release that did not adhere to semantic versioning.
+First, the file publisher was updated to work with a virtual file created by vinyl 3, thus fixing compatibility with the PDF extension.
+Second, an Asciidoctor extension registered as an Antora extension will be registered rather than skipped, though a warning will still be issued.</p>
+</div>
+<div class="sect2">
+<h3 id="resolved-issues"><a class="anchor" href="#resolved-issues"></a>Resolved issues</h3>
+<div class="sect3">
+<h4 id="changed"><a class="anchor" href="#changed"></a>Changed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1141" target="_blank" rel="noopener">#1141</a></dt>
+<dd>
+<p>Detect and warn when an AsciiDoc extension is registered as an Antora extension, but do no skip it.</p>
+</dd>
+<dt class="hdlist1">(no issue)</dt>
+<dd>
+<p>Replace "AsciiDoc extension" with "Asciidoctor extension" in log messages</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="fixed"><a class="anchor" href="#fixed"></a>Fixed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1139" target="_blank" rel="noopener">#1139</a></dt>
+<dd>
+<p>Wrap legacy stream on file when preparing files for output providers; remove listeners limit.
+Fixes compatibility with the Antora PDF extension.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antora-3-1-8"><a class="anchor" href="#antora-3-1-8"></a>Antora 3.1.8</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em><strong>Release date:</strong> 2024.06.25 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.8" target="_blank" rel="noopener">3.1.8</a></em></p>
+</div>
+<div class="paragraph">
+<p>The focus of this release is primarily to upgrade or eliminate out-of-date dependencies, address compliance with Node.js 22, and fix bugs.</p>
+</div>
+<div class="sect2">
+<h3 id="resolved-issues-2"><a class="anchor" href="#resolved-issues-2"></a>Resolved issues</h3>
+<div class="sect3">
+<h4 id="added"><a class="anchor" href="#added"></a>Added</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1084" target="_blank" rel="noopener">#1084</a></dt>
+<dd>
+<p>Detect (and skip) Antora extension that&#8217;s been registered as an AsciiDoc extension and log a warning (asciidoc-loader)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1084" target="_blank" rel="noopener">#1104</a></dt>
+<dd>
+<p>Detect (and skip) AsciiDoc extension registered as an Antora extension and log a warning (site-generator)</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="changed-2"><a class="anchor" href="#changed-2"></a>Changed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1121" target="_blank" rel="noopener">#1121</a></dt>
+<dd>
+<p>Replace new fs.Stats() with plain JavaScript object (content-aggregator, ui-loader)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1128" target="_blank" rel="noopener">#1128</a></dt>
+<dd>
+<p>Replace @vscode/gulp-vinyl-zip with low-level zip file reader using yauzl (ui-loader)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1128" target="_blank" rel="noopener">#1129</a></dt>
+<dd>
+<p>Replace @vscode/gulp-vinyl-zip with low-level zip file writer using yazl (file-publisher)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1088" target="_blank" rel="noopener">#1088</a></dt>
+<dd>
+<p>Log warning if nav entry cannot be resolved (content-classifier)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1109" target="_blank" rel="noopener">#1109</a></dt>
+<dd>
+<p>Fix <code>page.role</code> assignment to read value from <code>role</code> attribute instead of from (non-existent) <code>docrole</code> attribute (page-composer)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1121" target="_blank" rel="noopener">#1121</a></dt>
+<dd>
+<p>Assign empty object to stat property of output file if file does not have stat property (file-publisher)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1131" target="_blank" rel="noopener">#1131</a></dt>
+<dd>
+<p>Replace vinyl-fs#dest with internal implementation (file-publisher)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1133" target="_blank" rel="noopener">#1133</a></dt>
+<dd>
+<p>Upgrade vinyl and vinyl-fs to address security and deprecation warnings</p>
+</dd>
+<dt class="hdlist1">(no issue)</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Update description for <code>extension</code> CLI option to clarify it may be specified multiple times.</p>
+</li>
+<li>
+<p>Don&#8217;t include file in archive (zip) if contents property is null; matches behavior of fs publisher (file-publisher)</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="fixed-2"><a class="anchor" href="#fixed-2"></a>Fixed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1112" target="_blank" rel="noopener">#1112</a></dt>
+<dd>
+<p>Throw clearer error if antora.yml is empty or the data is not an object (content-aggregator)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1110" target="_blank" rel="noopener">#1110</a></dt>
+<dd>
+<p>Apply include tag filtering update from Asciidoctor (see <a href="https://github.com/asciidoctor/asciidoctor/pull/4233" class="bare">https://github.com/asciidoctor/asciidoctor/pull/4233</a>) to ported logic in Antora (asciidoc-loader)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1114" target="_blank" rel="noopener">#1114</a></dt>
+<dd>
+<p>Filter out cyclic aliases (i.e., redirect loops) (redirect-producer)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1134" target="_blank" rel="noopener">#1134</a></dt>
+<dd>
+<p>Create files streams for file publishers to process eagerly to avoid race condition (file-publisher)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1137" target="_blank" rel="noopener">#1137</a></dt>
+<dd>
+<p>Use raw value if attribute value set using <code>--attribute</code> option cannot be parsed as YAML (cli)</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antora-3-1-7"><a class="anchor" href="#antora-3-1-7"></a>Antora 3.1.7</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em><strong>Release date:</strong> 2024.01.02 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.7" target="_blank" rel="noopener">3.1.7</a></em></p>
+</div>
+<div class="sect2">
+<h3 id="resolved-issues-3"><a class="anchor" href="#resolved-issues-3"></a>Resolved issues</h3>
+<div class="sect3">
+<h4 id="changed-3"><a class="anchor" href="#changed-3"></a>Changed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1099" target="_blank" rel="noopener">#1099</a></dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Preserve all information in wrapped error (content-aggregator, ui-loader, file-publisher)</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1098" target="_blank" rel="noopener">#1098</a></dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Upgrade isomorphic-git to incorporate patch for properly handling network error (content-aggregator)</p>
+</li>
+<li>
+<p>Add cause in log message when retrying failed fetch/clone operations in series (content-aggregator)</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1101" target="_blank" rel="noopener">#1101</a></dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Clear timeout and keep-alive settings on git HTTP connections that don&#8217;t use custom agent (content-aggregator)</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">(No issue)</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Don&#8217;t retry failed clone/fetch operation if playbook only has one content source URL (content-aggregator)</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antora-3-1-6"><a class="anchor" href="#antora-3-1-6"></a>Antora 3.1.6</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em><strong>Release date:</strong> 2023.12.19 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.6" target="_blank" rel="noopener">3.1.6</a></em></p>
+</div>
+<div class="sect2">
+<h3 id="resolved-issues-4"><a class="anchor" href="#resolved-issues-4"></a>Resolved issues</h3>
+<div class="sect3">
+<h4 id="added-2"><a class="anchor" href="#added-2"></a>Added</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1096" target="_blank" rel="noopener">#1096</a></dt>
+<dd>
+<p>Add <code>git.read_concurrency</code> playbook key to control how many git indexes to load into memory at once (playbook-builder)</p>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="changed-4"><a class="anchor" href="#changed-4"></a>Changed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1096" target="_blank" rel="noopener">#1096</a></dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Change default value of <code>git.fetch_concurrency</code> to 1 (playbook-builder).</p>
+</li>
+<li>
+<p>Flag git clone/fetch error as recoverable if an unexpected network error occurs (content-aggregator).</p>
+</li>
+<li>
+<p>Decouple step to load (fetch or clone) repositories from step to scan repositories to discover references and start paths and collect files (content-aggregator).</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">(No issue)</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>Don&#8217;t read git tree twice if start path is empty; add dirname to tree object in same function (content-aggregator).</p>
+</li>
+<li>
+<p>Fill in progress bar with incomplete marks if cloning a repository fails (content-aggregator).</p>
+</li>
+<li>
+<p>Mention that credentials may have been rejected if server requests them, then sends 404 response (content-aggregator).</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+</div>
+<div class="sect3">
+<h4 id="fixed-3"><a class="anchor" href="#fixed-3"></a>Fixed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1070" target="_blank" rel="noopener">#1070</a></dt>
+<dd>
+<p>Add hostname to ignore list to prevent hostname property on logged error from modifying logger name (logger)</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1096" target="_blank" rel="noopener">#1096</a></dt>
+<dd>
+<p>Retry failed fetch/clone operations in serial if git.fetch_concurrency &gt; 1 and an unexpected error occurs (content-aggregator)</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antora-3-1-5"><a class="anchor" href="#antora-3-1-5"></a>Antora 3.1.5</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em><strong>Release date:</strong> 2023.11.22 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.5" target="_blank" rel="noopener">3.1.5</a></em></p>
+</div>
+<div class="sect2">
+<h3 id="resolved-issues-5"><a class="anchor" href="#resolved-issues-5"></a>Resolved issues</h3>
+<div class="sect3">
+<h4 id="changed-5"><a class="anchor" href="#changed-5"></a>Changed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1094" target="_blank" rel="noopener">#1094</a></dt>
+<dd>
+<p>Fix relative path computation when path is extensionless and to matches parent folder of from</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>Change gulp-vinyl-zip dependency to @vscode/gulp-vinyl-zip to remove warning (no functional changes).</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="fixed-4"><a class="anchor" href="#fixed-4"></a>Fixed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1092" target="_blank" rel="noopener">#1092</a></dt>
+<dd>
+<p>Don&#8217;t fail to load AsciiDoc if target of image macro resolves to an unpublished image</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1095" target="_blank" rel="noopener">#1095</a></dt>
+<dd>
+<p>Retry loadUi in isolation after aggregateContent if network connection occurs when retrieving remote UI bundle</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="antora-3-1-4"><a class="anchor" href="#antora-3-1-4"></a>Antora 3.1.4</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><em><strong>Release date:</strong> 2023.06.07 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.4" target="_blank" rel="noopener">3.1.4</a></em></p>
+</div>
+<div class="sect2">
+<h3 id="resolved-issues-6"><a class="anchor" href="#resolved-issues-6"></a>Resolved issues</h3>
+<div class="sect3">
+<h4 id="fixed-5"><a class="anchor" href="#fixed-5"></a>Fixed</h4>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1063" target="_blank" rel="noopener">#1063</a></dt>
+<dd>
+<p>Try credentials from credentials store if auth fails with credentials in URL.</p>
+</dd>
+<dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1064" target="_blank" rel="noopener">#1064</a></dt>
+<dd>
+<p>Consider local branches in non-managed bare repository that has at least one remote branch.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
 <h2 id="antora-3-1-3"><a class="anchor" href="#antora-3-1-3"></a>Antora 3.1.3</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><em><strong>Release date:</strong> 2023.04.02 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.3" target="_blank" rel="noopener">3.1.3</a></em></p>
 </div>
 <div class="sect2">
-<h3 id="resolved-issues"><a class="anchor" href="#resolved-issues"></a>Resolved issues</h3>
+<h3 id="resolved-issues-7"><a class="anchor" href="#resolved-issues-7"></a>Resolved issues</h3>
 <div class="sect3">
-<h4 id="fixed"><a class="anchor" href="#fixed"></a>Fixed</h4>
+<h4 id="fixed-6"><a class="anchor" href="#fixed-6"></a>Fixed</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1049" target="_blank" rel="noopener">#1049</a></dt>
 <dd>
 <p>Restore error stack in log output when using pino-std-serializers &gt;= 6.1</p>
+</dd>
+<dt class="hdlist1">(no issue)</dt>
+<dd>
 <div class="ulist">
 <ul>
 <li>
@@ -882,9 +1247,9 @@
 <p><em><strong>Release date:</strong> 2022.10.28 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.2" target="_blank" rel="noopener">3.1.2</a></em></p>
 </div>
 <div class="sect2">
-<h3 id="resolved-issues-2"><a class="anchor" href="#resolved-issues-2"></a>Resolved issues</h3>
+<h3 id="resolved-issues-8"><a class="anchor" href="#resolved-issues-8"></a>Resolved issues</h3>
 <div class="sect3">
-<h4 id="fixed-2"><a class="anchor" href="#fixed-2"></a>Fixed</h4>
+<h4 id="fixed-7"><a class="anchor" href="#fixed-7"></a>Fixed</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1010" target="_blank" rel="noopener">#1010</a></dt>
@@ -928,9 +1293,9 @@
 <p><em><strong>Release date:</strong> 2022.09.21 | <strong>Issue label:</strong> <a href="https://gitlab.com/antora/antora/issues?scope=all&amp;state=closed&amp;label_name%5B%5D=%5BVersion%5D%203.1.1" target="_blank" rel="noopener">3.1.1</a></em></p>
 </div>
 <div class="sect2">
-<h3 id="resolved-issues-3"><a class="anchor" href="#resolved-issues-3"></a>Resolved issues</h3>
+<h3 id="resolved-issues-9"><a class="anchor" href="#resolved-issues-9"></a>Resolved issues</h3>
 <div class="sect3">
-<h4 id="changed"><a class="anchor" href="#changed"></a>Changed</h4>
+<h4 id="changed-6"><a class="anchor" href="#changed-6"></a>Changed</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1004" target="_blank" rel="noopener">#1004</a></dt>
@@ -943,7 +1308,7 @@ See <a href="playbook/runtime-log-format.html" class="xref page">Log Format</a> 
 </div>
 </div>
 <div class="sect3">
-<h4 id="fixed-3"><a class="anchor" href="#fixed-3"></a>Fixed</h4>
+<h4 id="fixed-8"><a class="anchor" href="#fixed-8"></a>Fixed</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/1003" target="_blank" rel="noopener">#1003</a></dt>
@@ -1003,9 +1368,9 @@ See <a href="playbook/runtime-log-format.html" class="xref page">Log Format</a> 
 <p>You can find a summary of the issues resolved in this release below.</p>
 </div>
 <div class="sect2">
-<h3 id="resolved-issues-4"><a class="anchor" href="#resolved-issues-4"></a>Resolved issues</h3>
+<h3 id="resolved-issues-10"><a class="anchor" href="#resolved-issues-10"></a>Resolved issues</h3>
 <div class="sect3">
-<h4 id="added"><a class="anchor" href="#added"></a>Added</h4>
+<h4 id="added-3"><a class="anchor" href="#added-3"></a>Added</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/221" target="_blank" rel="noopener">#221</a></dt>
@@ -1069,7 +1434,7 @@ See <a href="page/intrinsic-attributes.html#page-attributes" class="xref page">i
 </div>
 </div>
 <div class="sect3">
-<h4 id="changed-2"><a class="anchor" href="#changed-2"></a>Changed</h4>
+<h4 id="changed-7"><a class="anchor" href="#changed-7"></a>Changed</h4>
 <div class="dlist">
 <dl>
 <dt class="hdlist1">Issue <a href="https://gitlab.com/antora/antora/issues/900" target="_blank" rel="noopener">#900</a></dt>
@@ -1107,7 +1472,7 @@ Use isolated Handlebars environment instead of the default (global) environment.
 </div>
 </div>
 <div class="sect3">
-<h4 id="fixed-4"><a class="anchor" href="#fixed-4"></a>Fixed</h4>
+<h4 id="fixed-9"><a class="anchor" href="#fixed-9"></a>Fixed</h4>
 <div class="ulist">
 <ul>
 <li>
@@ -1171,8 +1536,10 @@ The <a href="https://chat.antora.org">Antora community</a> has provided invaluab
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>

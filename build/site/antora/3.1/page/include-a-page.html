@@ -6,25 +6,28 @@
     <title>Include a Page :: Personal Documentation Site</title>
     <link rel="prev" href="page-layout.html">
     <link rel="next" href="page-partial.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../../_/css/site.css">
-    <script>var uiRootPath = '../../../_'</script>
-    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="../index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="../asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="../asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="../asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="../asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="../playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="../index.html">Antora</a>
+      <div class="title"><a href="../index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="../index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../../homelab/main/ansible.html">main</a>
@@ -1038,7 +1046,7 @@ include::./target-page-filename.adoc[] <i class="conum" data-value="3"></i><b>(3
 </table>
 </div>
 <div class="paragraph">
-<p>The following sections describe how to specify a file coordinate with a <a href="#relative-path">pages-relative directory path</a> or <a href="#token">relative path token</a>.
+<p>The following sections describe how to specify a file coordinate with a <a href="#relative-path">pages-relative directory path</a> or <a href="#relative-path-token">relative path token</a>.
 Also, you&#8217;ll need to specify additional resource ID coordinates when the target page and current page don&#8217;t belong to the <a href="#module-or-component">same module</a> or <a href="#module-or-component">component version</a>.</p>
 </div>
 <div class="sect2">
@@ -1110,20 +1118,20 @@ If the current page and target page were stored in the same subdirectory, you co
 </div>
 </div>
 <div class="sect2">
-<h3 id="token"><a class="anchor" href="#token"></a>File coordinate with relative path token</h3>
+<h3 id="relative-path-token"><a class="anchor" href="#relative-path-token"></a>File coordinate with relative path token</h3>
 <div class="paragraph">
 <p>If the <a href="#target">target page</a> and <a href="#current">current page</a> are stored in the same subdirectory within the <em class="path">pages</em> directory, the <em>pages</em>-relative directory path of the target page&#8217;s file coordinate can be replaced with the relative path token, <code>./</code>.</p>
 </div>
-<div id="ex-token-base" class="listingblock">
+<div class="listingblock">
 <div class="title">Example 11. File coordinate in include directive when the target page and current page are stored in the same subdirectory</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">include::./target-page-filename.adoc[]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s use the pages that belong to the component version shown in <a href="#ex-co-token">Example 12</a> as the basis for the examples in this section.</p>
+<p>Let&#8217;s use the pages that belong to the component version shown in <a href="#ex-co-relative-path-token">Example 12</a> as the basis for the examples in this section.</p>
 </div>
-<div id="ex-co-token" class="listingblock">
+<div id="ex-co-relative-path-token" class="listingblock">
 <div class="title">Example 12. Directories and files assigned to colorado 5.2</div>
 <div class="content">
 <pre>📄 antora.yml <i class="conum" data-value="1"></i><b>(1)</b>
@@ -1160,20 +1168,20 @@ If the current page and target page were stored in the same subdirectory, you co
 </div>
 <div class="paragraph">
 <p>Let&#8217;s reference <em class="path">gear.adoc</em> from <em class="path">safety.adoc</em>.
-<a href="#ex-co-token">Example 12</a> shows that both files are stored in the <em class="path">supplies</em> subdirectory of the <em class="path">pages</em> directory, and that both files belong to the <em>ROOT</em> module of the same component version.
+<a href="#ex-co-relative-path-token">Example 12</a> shows that both files are stored in the <em class="path">supplies</em> subdirectory of the <em class="path">pages</em> directory, and that both files belong to the <em>ROOT</em> module of the same component version.
 When the target page and current page are stored in the same subdirectory within the <em class="path">pages</em> directory, the relative path token, <code>./</code>, can be used to abbreviate the target page&#8217;s file coordinate.</p>
 </div>
 <div class="paragraph">
-<p>In <a href="#ex-token">Example 13</a>, the include directive in the <em class="path">safety.adoc</em> page (current page) references the <em class="path">gear.adoc</em> page (target page).</p>
+<p>In <a href="#ex-relative-path-token-subdir">Example 13</a>, the include directive in the <em class="path">safety.adoc</em> page (current page) references the <em class="path">gear.adoc</em> page (target page).</p>
 </div>
-<div id="ex-token" class="listingblock">
+<div id="ex-relative-path-token-subdir" class="listingblock">
 <div class="title">Example 13. safety.adoc (current page)</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">include::./gear.adoc[]</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As shown in <a href="#ex-token">Example 13</a>, the file coordinate for <em class="path">gear.adoc</em>, when referenced from <em class="path">safety.adoc</em>, is <code>./gear.adoc</code>.
+<p>As shown in <a href="#ex-relative-path-token-subdir">Example 13</a>, the file coordinate for <em class="path">gear.adoc</em>, when referenced from <em class="path">safety.adoc</em>, is <code>./gear.adoc</code>.
 Both pages are stored in the <em class="path">supplies</em> subdirectory, therefore, the <em>pages</em>-relative directory path of the target page&#8217;s file coordinate is replaced with the <code>./</code> token.</p>
 </div>
 <div class="admonitionblock caution">
@@ -1329,8 +1337,10 @@ Another line of content.</code></pre>
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../../_/js/site.js" data-ui-root-path="../../../_"></script>
+<script async src="../../../_/js/vendor/tabs.js"></script>
 <script async src="../../../_/js/vendor/highlight.js"></script>
 <script src="../../../_/js/vendor/lunr.js"></script>
+<script src="../../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../../.." data-snippet-length="100" data-stylesheet="../../../_/css/search.css"></script>
 <script async src="../../../search-index.js"></script>
   </body>

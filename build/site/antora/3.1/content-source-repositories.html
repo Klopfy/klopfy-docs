@@ -6,25 +6,28 @@
     <title>Repositories and Content Source Roots :: Personal Documentation Site</title>
     <link rel="prev" href="organize-content-files.html">
     <link rel="next" href="content-source-versioning-methods.html">
-    <meta name="generator" content="Antora 3.1.2">
+    <meta name="generator" content="Antora 3.1.9">
     <script>
 !function (theme) {
   if (theme === 'dark') document.documentElement.classList.add('dark-theme')
 }(localStorage && localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)') && 'dark'))
     </script>
     <link rel="stylesheet" href="../../_/css/site.css">
-    <script>var uiRootPath = '../../_'</script>
-    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
+    <link rel="stylesheet" href="../../_/css/vendor/tabs.css">
+    <link rel="stylesheet" href="../../_/css/vendor/asciinema-player.css">    <link rel="icon" href="../../_/img/favicon.ico" type="image/vnd.microsoft.icon">
   </head>
   <body class="article">
 <header class="header">
   <nav class="navbar">
     <div class="navbar-brand">
-      <div class="navbar-item">
-        Personal Notes
-      </div>
+      <a class="navbar-item" href="../..">Personal Documentation Site</a>
       <div class="navbar-item search hide-for-print">
-        <input id="search-input" type="text" placeholder="Search the docs">
+        <div id="search-field" class="field has-filter">
+          <input id="search-input" type="text" placeholder="Search the docs">
+          <label class="filter checkbox">
+            <input type="checkbox" data-facet-filter="component:antora"> In this project
+          </label>
+        </div>
       </div>
       <button class="navbar-burger" data-target="topbar-nav">
         <span></span>
@@ -49,12 +52,14 @@
     </div>
   </nav>
 </header>
+<script src="../../_/js/vendor/asciinema-player.js"></script>
 <div class="body">
 <div class="nav-container" data-component="antora" data-version="3.1">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
+    <button class="nav-menu-toggle" aria-label="Toggle expand/collapse all" style="display: none"></button>
     <h3 class="title"><a href="index.html">Antora</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
@@ -328,10 +333,10 @@
   </li>
   <li class="nav-item" data-depth="0">
     <button class="nav-item-toggle"></button>
-    <span class="nav-text">AsciiDoc Primer</span>
+    <a class="nav-link" href="asciidoc/index.html">AsciiDoc Primer</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
-    <a class="nav-link" href="asciidoc/asciidoc.html">Why AsciiDoc?</a>
+    <a class="nav-link" href="asciidoc/document-header.html">Document Header</a>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="asciidoc/section-headings.html">Sections</a>
@@ -528,6 +533,9 @@
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-fetch-concurrency.html">Git Fetch Concurrency Limit</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="playbook/git-read-concurrency.html">Git Read Concurrency Limit</a>
   </li>
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="playbook/git-credentials-path-and-contents.html">Git Credentials Path and Contents</a>
@@ -802,7 +810,7 @@
   </div>
   <ul class="components">
     <li class="component is-current">
-      <a class="title" href="index.html">Antora</a>
+      <div class="title"><a href="index.html">Antora</a></div>
       <ul class="versions">
         <li class="version is-current is-latest">
           <a href="index.html">3.1</a>
@@ -810,7 +818,7 @@
       </ul>
     </li>
     <li class="component">
-      <a class="title" href="../../homelab/main/ansible.html">Homelab</a>
+      <div class="title"><a href="../../homelab/main/ansible.html">Homelab</a></div>
       <ul class="versions">
         <li class="version is-latest">
           <a href="../../homelab/main/ansible.html">main</a>
@@ -857,13 +865,31 @@ These source files are only retrieved and processed correctly if Antora can loca
 <div class="paragraph">
 <p>The source files containing a site&#8217;s content are stored in one or more git repositories.
 These repositories can be remote, local, or a combination of both.
-In a playbook file, you&#8217;ll enter several parameters (url, git references, and start paths) that 1. allow Antora to locate and connect to your content source repositories, and 2. provide Antora with the location criteria that resolves to one or more <a href="#content-source-root">content source roots</a> within a git repository.</p>
+In a playbook file, you&#8217;ll enter several parameters (e.g., url, branches, tags, and start paths) that:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>allow Antora to locate and connect to your content source repositories, and</p>
+</li>
+<li>
+<p>provide Antora with the location criteria that resolves to one or more <a href="#content-source-root">content source roots</a> within a git repository.</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>If the repository is local, by default Antora will attempt to use the worktree of that repository if the current branch matches one of the branches defined on the content source.
-This behavior is configurable.
-Antora requires that a local directory is a git repository (thus making the local directory a worktree).
-However, you can initialize an empty repository at that location and Antora will then be able to use it (e.g., <code>git init . &amp;&amp; git commit --allow-empty -m init</code>).</p>
+This behavior is configurable.</p>
+</div>
+<div class="paragraph">
+<p>Antora requires a local directory to be a git repository, which means the local directory is a git worktree.
+The git repository itself can be empty, meaning you don&#8217;t have to commit any files in order for it to work.
+If the local directory is not yet a git repository, you can make it one by running the following commands:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>$ git init . &amp;&amp; git commit --allow-empty -m init</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Before configuring a site&#8217;s playbook, you&#8217;ll want to determine where to set up the content source roots in your repositories.</p>
@@ -899,8 +925,10 @@ Where you store the content source roots is up to you.</p>
   <p>This website was built using <a href="https://antora.org/">Antora</a>. UI inspired of <a href="https://gitlab.com/antora/antora-ui-default">Antora Default UI</a> and <a href="https://github.com/spring-io/antora-ui-spring">Spring UI</a>.</p>
 </footer>
 <script id="site-script" src="../../_/js/site.js" data-ui-root-path="../../_"></script>
+<script async src="../../_/js/vendor/tabs.js"></script>
 <script async src="../../_/js/vendor/highlight.js"></script>
 <script src="../../_/js/vendor/lunr.js"></script>
+<script src="../../_/js/vendor/lunr-languages.js"></script>
 <script src="../../_/js/search-ui.js" id="search-ui-script" data-site-root-path="../.." data-snippet-length="100" data-stylesheet="../../_/css/search.css"></script>
 <script async src="../../search-index.js"></script>
   </body>
